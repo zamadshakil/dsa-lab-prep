@@ -10,19 +10,13 @@ import { useState, useEffect } from "react";
 
 export function Sidebar() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => { setOpen(false); }, [pathname]);
-  useEffect(() => {
-    const onEsc = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
-    document.addEventListener("keydown", onEsc);
-    return () => document.removeEventListener("keydown", onEsc);
-  }, []);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const navItems = [
-    { href: "/", label: "Overview" },
-    ...topics.map((t) => ({ href: `/${t.slug}`, label: t.title })),
-    { href: "/quick-reference", label: "Quick Reference" },
+    { href: "/", label: "Overview", icon: "🏠" },
+    ...topics.map((t) => ({ href: `/${t.slug}`, label: t.shortTitle, icon: t.icon })),
+    { href: "/quick-reference", label: "Quick Ref", icon: "⚡" },
   ];
 
   const Nav = () => (
@@ -83,31 +77,51 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile toggle */}
-      <button onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}
-        className="lg:hidden fixed top-4 left-4 z-[200] w-10 h-10 rounded-xl bg-white/90 backdrop-blur-xl text-slate-900 flex items-center justify-center shadow-md border border-slate-200">
-        {open ? <X size={16} /> : <Menu size={16} />}
-      </button>
+      {/* Mobile Top Header (Branding only) */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 h-[60px] bg-white/80 backdrop-blur-xl border-b border-slate-200/60 z-[140] flex items-center px-4 sm:px-6 shadow-sm">
+        <Link href="/" className="flex flex-col">
+          <p className="text-[17px] font-bold tracking-tight text-slate-900">
+            DSA Lab Prep
+          </p>
+        </Link>
+      </div>
 
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex fixed left-0 top-0 w-[280px] h-screen bg-slate-50 border-r border-slate-200 z-50 flex-col" aria-label="Navigation">
         <Nav />
       </aside>
 
-      {/* Mobile drawer */}
-      <AnimatePresence>
-        {open && (
-          <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)}
-              className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-[150] lg:hidden" aria-hidden="true" />
-            <motion.aside initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }}
-              transition={{ type: "spring", stiffness: 400, damping: 35 }}
-              className="fixed left-0 top-0 w-[280px] h-screen bg-slate-50 border-r border-slate-200 z-[160] flex flex-col lg:hidden shadow-2xl" aria-label="Mobile navigation">
-              <Nav />
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
+      {/* Mobile Bottom Tab Bar */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 h-[64px] sm:h-[70px] bg-white border-t border-slate-200 z-[140] flex items-center justify-between pb-safe shadow-[0_-4px_12px_rgba(0,0,0,0.03)]">
+        <div className="flex w-full overflow-x-auto items-end justify-start sm:justify-center hide-scrollbar h-full px-2">
+          {navItems.map((item) => {
+            const isActive = item.href === "/" ? pathname === "/" : pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex flex-col items-center justify-center w-[72px] sm:w-[84px] h-full flex-shrink-0 transition-colors relative gap-1",
+                  isActive ? "text-blue-600" : "text-slate-500 hover:text-slate-900"
+                )}
+              >
+                {isActive && (
+                  <motion.div layoutId="bottomNavIndicator" className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-blue-600 rounded-b-full shadow-[0_2px_8px_rgba(37,99,235,0.4)]" />
+                )}
+                <span className={cn("text-[20px] sm:text-[22px] transition-transform duration-200 mt-1", isActive && "scale-110")}>
+                  {item.icon}
+                </span>
+                <span className={cn(
+                  "text-[10px] sm:text-[11px] font-semibold tracking-tight truncate w-full text-center px-1",
+                  isActive ? "text-blue-700" : "font-medium"
+                )}>
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
     </>
   );
 }

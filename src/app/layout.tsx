@@ -37,7 +37,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </a>
         <Sidebar />
         <main id="main-content" role="main" className="lg:pl-[280px]">
-          <div className="max-w-[820px] mx-auto px-6 sm:px-8 lg:px-10 py-10 sm:py-14 pb-32">
+          <div className="max-w-[1024px] mx-auto pt-[80px] lg:pt-[56px] px-6 sm:px-8 lg:px-10 pb-[100px] lg:pb-32">
             {children}
           </div>
         </main>
