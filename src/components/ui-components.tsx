@@ -52,7 +52,7 @@ export function SectionHeader({ icon, title, tag, color, colorDim }: {
 export function Card({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <div className={cn(
-      "rounded-[20px] bg-white p-5 sm:p-6 shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:-translate-y-[2px] transition-all duration-300",
+      "rounded-2xl bg-white p-5 sm:p-6 border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300",
       className
     )}>
       {children}
@@ -63,7 +63,7 @@ export function Card({ children, className }: { children: React.ReactNode; class
 // ===== INFO CARD =====
 export function InfoCard({ title, children, icon = "💡" }: { title: string; children: React.ReactNode; icon?: string }) {
   return (
-    <div className="rounded-[20px] bg-slate-50 p-5 sm:p-6 shadow-[var(--shadow-sm)] border border-slate-200">
+    <div className="rounded-2xl bg-slate-50 p-5 sm:p-6 border border-slate-200">
       <div className="flex items-center gap-2 mb-2.5">
         <span role="img" aria-hidden="true" className="text-sm">{icon}</span>
         <p className="text-[13px] font-bold text-blue-600 uppercase tracking-[0.04em]">{title}</p>
@@ -76,11 +76,13 @@ export function InfoCard({ title, children, icon = "💡" }: { title: string; ch
 }
 
 // ===== KEY POINT =====
-export function KeyPoint({ icon, children }: { icon: string; children: React.ReactNode }) {
+export function KeyPoint({ icon, children }: { icon: React.ReactNode | string; children: React.ReactNode }) {
   return (
-    <div className="flex gap-3 p-5 rounded-[20px] bg-white shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:-translate-y-[2px] transition-all duration-300">
-      <span className="text-base flex-shrink-0 mt-0.5" role="img" aria-hidden="true">{icon}</span>
-      <div className="text-[14px] text-slate-600 leading-[1.65] [&_strong]:text-slate-900 [&_strong]:font-semibold [&_code]:font-[family-name:var(--font-jetbrains)] [&_code]:text-[12px] [&_code]:bg-slate-50 [&_code]:border [&_code]:border-slate-200 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-blue-600">
+    <div className="flex gap-3 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center -mt-1 shadow-sm border border-blue-100">
+        <span className="text-[14px] font-bold fill-current">{icon}</span>
+      </div>
+      <div className="text-[14px] leading-[1.6] text-slate-700 font-medium [&_strong]:text-slate-900 [&_strong]:font-semibold [&_code]:font-[family-name:var(--font-jetbrains)] [&_code]:text-[12px] [&_code]:bg-slate-50 [&_code]:border [&_code]:border-slate-200 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-blue-600">
         {children}
       </div>
     </div>
@@ -91,20 +93,20 @@ export function KeyPoint({ icon, children }: { icon: string; children: React.Rea
 interface CompRow { aspect: string; col1: string; col2: string }
 
 export function ComparisonTable({ title, color, headers, rows }: {
-  title: string; color: string; headers: [string, string, string]; rows: CompRow[];
+  title: string; color?: string; headers: [string, string, string]; rows: CompRow[];
 }) {
   return (
-    <div className="rounded-[20px] bg-white overflow-hidden shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] transition-shadow duration-300 border border-slate-100">
+    <div className="rounded-2xl bg-white overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300">
       <div className="px-5 sm:px-6 py-4 border-b border-slate-100 flex items-center gap-2.5">
         <div className="w-[8px] h-[8px] rounded-full bg-blue-500" />
         <p className="text-[14px] font-semibold text-slate-900">{title}</p>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full" role="table" aria-label={title}>
+        <table className="w-full text-left" role="table" aria-label={title}>
           <thead>
             <tr className="border-b border-slate-100 bg-slate-50/50">
               {headers.map((h, i) => (
-                <th key={i} scope="col" className="px-5 sm:px-6 py-3 text-left text-[11px] font-semibold text-slate-500 uppercase tracking-[0.06em]">{h}</th>
+                <th key={i} scope="col" className="px-5 sm:px-6 py-3 text-[11px] font-semibold text-slate-500 uppercase tracking-[0.06em]">{h}</th>
               ))}
             </tr>
           </thead>
@@ -112,7 +114,7 @@ export function ComparisonTable({ title, color, headers, rows }: {
             {rows.map((row, i) => (
               <tr key={i} className="border-b border-slate-50 last:border-b-0 hover:bg-slate-50 transition-colors">
                 <td className="px-5 sm:px-6 py-3.5 text-[13px] font-medium text-slate-900">{row.aspect}</td>
-                <td className="px-5 sm:px-6 py-3.5 text-[13px] font-[family-name:var(--font-jetbrains)] text-slate-500">{row.col1}</td>
+                <td className="px-5 sm:px-6 py-3.5 text-[13px] font-[family-name:var(--font-jetbrains)] text-slate-600">{row.col1}</td>
                 <td className="px-5 sm:px-6 py-3.5 text-[13px] font-[family-name:var(--font-jetbrains)] text-blue-600 font-medium">{row.col2}</td>
               </tr>
             ))}

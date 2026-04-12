@@ -26,7 +26,7 @@ export function Sidebar() {
   ];
 
   const Nav = () => (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-slate-50">
       {/* Brand */}
       <div className="px-6 pt-7 pb-5">
         <Link href="/" className="block group" aria-label="Home">
@@ -50,10 +50,10 @@ export function Sidebar() {
                   href={item.href}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "flex items-center gap-3 px-3 py-2.5 rounded-[12px] text-[14px] font-medium transition-all duration-200",
+                    "flex items-center gap-3 px-3 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-200",
                     isActive
-                      ? "bg-blue-50 text-blue-600 shadow-sm border border-blue-100/50"
-                      : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 border border-transparent"
+                      ? "bg-blue-50 text-blue-700 shadow-sm border border-blue-200/60"
+                      : "text-slate-600 hover:bg-slate-200/50 hover:text-slate-900 border border-transparent"
                   )}
                 >
                   <div className={cn(
@@ -69,8 +69,14 @@ export function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="px-6 py-5 border-t border-slate-200/60">
+      <div className="px-6 py-5 border-t border-slate-200/60 flex flex-col gap-4">
         <ExamCountdown />
+        <a href="https://zamdevai.com" target="_blank" rel="noopener noreferrer" 
+           className="group flex flex-col p-3 rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-200 transition-all">
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 group-hover:text-blue-500 transition-colors">Developed by</span>
+          <span className="text-[14px] font-semibold text-slate-900">ZamDev AI</span>
+          <span className="text-[12px] text-slate-500 font-medium">Founder: Zamad Shakeel</span>
+        </a>
       </div>
     </div>
   );
@@ -79,12 +85,12 @@ export function Sidebar() {
     <>
       {/* Mobile toggle */}
       <button onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}
-        className="lg:hidden fixed top-4 left-4 z-[200] w-10 h-10 rounded-xl bg-white/90 backdrop-blur-xl text-slate-900 flex items-center justify-center shadow-md border border-slate-200/50">
+        className="lg:hidden fixed top-4 left-4 z-[200] w-10 h-10 rounded-xl bg-white/90 backdrop-blur-xl text-slate-900 flex items-center justify-center shadow-md border border-slate-200">
         {open ? <X size={16} /> : <Menu size={16} />}
       </button>
 
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex fixed left-0 top-0 w-[280px] h-screen bg-white/70 backdrop-blur-2xl border-r border-slate-200 z-50 flex-col" aria-label="Navigation">
+      <aside className="hidden lg:flex fixed left-0 top-0 w-[280px] h-screen bg-slate-50 border-r border-slate-200 z-50 flex-col" aria-label="Navigation">
         <Nav />
       </aside>
 
@@ -96,7 +102,7 @@ export function Sidebar() {
               className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-[150] lg:hidden" aria-hidden="true" />
             <motion.aside initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }}
               transition={{ type: "spring", stiffness: 400, damping: 35 }}
-              className="fixed left-0 top-0 w-[280px] h-screen bg-white/95 backdrop-blur-2xl border-r border-slate-200 z-[160] flex flex-col lg:hidden shadow-2xl" aria-label="Mobile navigation">
+              className="fixed left-0 top-0 w-[280px] h-screen bg-slate-50 border-r border-slate-200 z-[160] flex flex-col lg:hidden shadow-2xl" aria-label="Mobile navigation">
               <Nav />
             </motion.aside>
           </>

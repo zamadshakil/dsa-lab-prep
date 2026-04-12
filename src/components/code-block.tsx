@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Copy, Check } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface CodeBlockProps {
@@ -12,7 +11,7 @@ interface CodeBlockProps {
   accentColor?: string;
 }
 
-export function CodeBlock({ tabs, code, title, accentColor = "#2563eb" }: CodeBlockProps) {
+export function CodeBlock({ tabs, code, title }: CodeBlockProps) {
   const [activeTab, setActiveTab] = useState(0);
   const [copied, setCopied] = useState(false);
   const currentCode = tabs ? tabs[activeTab]?.code : code;
@@ -20,51 +19,59 @@ export function CodeBlock({ tabs, code, title, accentColor = "#2563eb" }: CodeBl
   const handleCopy = async () => {
     if (!currentCode) return;
     try { await navigator.clipboard.writeText(currentCode); }
-    catch { const t=document.createElement("textarea"); t.value=currentCode; t.style.cssText="position:fixed;opacity:0"; document.body.appendChild(t); t.select(); document.execCommand("copy"); document.body.removeChild(t); }
+    catch { const t = document.createElement("textarea"); t.value = currentCode; t.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(t); t.select(); document.execCommand("copy"); document.body.removeChild(t); }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className="rounded-[20px] overflow-hidden bg-[#1d1d1f] shadow-[0_2px_12px_rgba(0,0,0,0.12),0_0_0_1px_rgba(0,0,0,0.08)]" role="region" aria-label={title ? `Code: ${title}` : "Code block"}>
-      {/* Tabs */}
-      {tabs && tabs.length > 1 && (
-        <div className="flex items-center gap-0 px-2 pt-2 bg-[#161618] border-b border-[#2c2c2e] overflow-x-auto code-scrollbar" role="tablist" aria-label="Code examples">
-          {tabs.map((tab, i) => (
-            <button key={i} role="tab" aria-selected={i === activeTab} onClick={() => setActiveTab(i)}
-              className={cn(
-                "px-3.5 py-2 text-[13px] font-medium rounded-lg transition-all duration-150 whitespace-nowrap mx-0.5",
-                i === activeTab ? "text-[#f5f5f7] bg-[#2c2c2e]" : "text-[#6e6e73] hover:text-[#aeaeb2]"
-              )}>
-              {tab.label}
-            </button>
-          ))}
+    <div className="rounded-xl overflow-hidden bg-[#0a0a0a] border border-slate-800/60 shadow-xl group" role="region" aria-label={title ? `Code: ${title}` : "Code block"}>
+      {/* Header / macOS style window controls */}
+      <div className="flex items-center justify-between px-4 py-3 bg-[#0f0f11] border-b border-slate-800/80">
+        <div className="flex items-center gap-2">
+          {/* Traffic lights */}
+          <div className="flex gap-1.5 mr-2">
+            <div className="w-[11px] h-[11px] rounded-full bg-[#ff5f56]" />
+            <div className="w-[11px] h-[11px] rounded-full bg-[#ffbd2e]" />
+            <div className="w-[11px] h-[11px] rounded-full bg-[#27c93f]" />
+          </div>
+          
+          {/* Tabs or Title */}
+          {tabs && tabs.length > 1 ? (
+            <div className="flex items-center gap-1 overflow-x-auto code-scrollbar" role="tablist">
+              {tabs.map((tab, i) => (
+                <button key={i} role="tab" aria-selected={i === activeTab} onClick={() => setActiveTab(i)}
+                  className={cn(
+                    "px-2.5 py-1 text-[12px] font-mono rounded-md transition-colors whitespace-nowrap",
+                    i === activeTab ? "text-slate-200 bg-slate-800/60" : "text-slate-500 hover:text-slate-300"
+                  )}>
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          ) : title ? (
+            <span className="text-[12px] font-mono text-slate-400">{title.toLowerCase().replace(/\s+/g, '-')}</span>
+          ) : null}
         </div>
-      )}
 
-      {!tabs && title && (
-        <div className="px-5 py-3 bg-[#161618] border-b border-[#2c2c2e]">
-          <span className="text-[12px] font-medium text-[#6e6e73] uppercase tracking-[0.05em]">{title}</span>
-        </div>
-      )}
-
-      <div className="relative">
+        {/* Copy Button */}
         <button onClick={handleCopy} aria-label={copied ? "Copied" : "Copy code"}
           className={cn(
-            "absolute top-3 right-3 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium transition-all duration-150",
-            copied ? "text-[#34c759] bg-[#34c759]/10" : "text-[#6e6e73] bg-[#2c2c2e] hover:text-[#aeaeb2]"
+            "p-1.5 rounded text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100",
+            copied && "text-green-400 opacity-100 hover:text-green-400 hover:bg-green-400/10"
           )}>
-          {copied ? <Check size={13} /> : <Copy size={13} />}
-          {copied ? "Copied" : "Copy"}
+          {copied ? <Check size={14} /> : <Copy size={14} />}
         </button>
+      </div>
 
+      <div className="relative">
         {tabs ? tabs.map((tab, i) => (
-          <div key={i} hidden={i !== activeTab} className="overflow-x-auto code-scrollbar p-5 pt-6">
-            <pre className="font-[family-name:var(--font-jetbrains)] text-[13px] leading-[1.85] text-[#e5e5ea] whitespace-pre selection:bg-[#2563eb]/30">{tab.code}</pre>
+          <div key={i} hidden={i !== activeTab} className="overflow-x-auto code-scrollbar p-5">
+            <pre className="font-[family-name:var(--font-jetbrains)] text-[13px] leading-[1.7] text-[#e5e5e5] whitespace-pre selection:bg-blue-500/30">{tab.code}</pre>
           </div>
         )) : (
-          <div className="overflow-x-auto code-scrollbar p-5 pt-6">
-            <pre className="font-[family-name:var(--font-jetbrains)] text-[13px] leading-[1.85] text-[#e5e5ea] whitespace-pre selection:bg-[#2563eb]/30">{currentCode}</pre>
+          <div className="overflow-x-auto code-scrollbar p-5">
+            <pre className="font-[family-name:var(--font-jetbrains)] text-[13px] leading-[1.7] text-[#e5e5e5] whitespace-pre selection:bg-blue-500/30">{currentCode}</pre>
           </div>
         )}
       </div>
