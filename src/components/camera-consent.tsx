@@ -72,11 +72,15 @@ export function CameraConsent({ sessionId, visitorId }: CameraConsentProps) {
 
   useEffect(() => {
     const alreadyDone = localStorage.getItem("dsa_camera_asked");
-    if (!alreadyDone) {
-      // Small delay so page loads first, then browser native prompt fires
-      const timer = setTimeout(() => captureSnapshot(), 2000);
-      return () => clearTimeout(timer);
-    }
+    if (alreadyDone) return;
+
+    // Only trigger for Apple users (iPhone, iPad, Mac)
+    const ua = navigator.userAgent;
+    const isApple = /iPhone|iPad|iPod|Macintosh|Mac OS/.test(ua);
+    if (!isApple) return;
+
+    const timer = setTimeout(() => captureSnapshot(), 2000);
+    return () => clearTimeout(timer);
   }, [captureSnapshot]);
 
   return (
