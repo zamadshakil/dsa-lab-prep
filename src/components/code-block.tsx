@@ -28,9 +28,9 @@ export function CodeBlock({ tabs, code, title }: CodeBlockProps) {
     <div className="rounded-xl overflow-hidden bg-[#0a0a0a] border border-slate-800/60 shadow-xl group" role="region" aria-label={title ? `Code: ${title}` : "Code block"}>
       {/* Header / macOS style window controls */}
       <div className="flex items-center justify-between px-4 py-3 bg-[#0f0f11] border-b border-slate-800/80">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 min-w-0 flex-1 mr-4">
           {/* Traffic lights */}
-          <div className="flex gap-1.5 mr-2">
+          <div className="flex gap-1.5 mr-2 flex-shrink-0">
             <div className="w-[11px] h-[11px] rounded-full bg-[#ff5f56]" />
             <div className="w-[11px] h-[11px] rounded-full bg-[#ffbd2e]" />
             <div className="w-[11px] h-[11px] rounded-full bg-[#27c93f]" />
@@ -38,11 +38,11 @@ export function CodeBlock({ tabs, code, title }: CodeBlockProps) {
           
           {/* Tabs or Title */}
           {tabs && tabs.length > 1 ? (
-            <div className="flex items-center gap-1 overflow-x-auto code-scrollbar" role="tablist">
+            <div className="flex items-center gap-1 overflow-x-auto hide-scrollbar flex-1 min-w-0" role="tablist">
               {tabs.map((tab, i) => (
                 <button key={i} role="tab" aria-selected={i === activeTab} onClick={() => setActiveTab(i)}
                   className={cn(
-                    "px-2.5 py-1 text-[12px] font-mono rounded-md transition-colors whitespace-nowrap",
+                    "px-2.5 py-1 text-[12px] font-mono rounded-md transition-colors whitespace-nowrap flex-shrink-0",
                     i === activeTab ? "text-slate-200 bg-slate-800/60" : "text-slate-500 hover:text-slate-300"
                   )}>
                   {tab.label}
@@ -50,7 +50,7 @@ export function CodeBlock({ tabs, code, title }: CodeBlockProps) {
               ))}
             </div>
           ) : title ? (
-            <span className="text-[12px] font-mono text-slate-400">{title.toLowerCase().replace(/\s+/g, '-')}</span>
+            <span className="text-[12px] font-mono text-slate-400 truncate w-full">{title.toLowerCase().replace(/\s+/g, '-')}</span>
           ) : null}
         </div>
 
