@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "@/components/sidebar";
@@ -15,16 +15,27 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#000000",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
-  title: "DSA Lab Exam Prep — Mid-Term Dashboard",
+  title: {
+    default: "DSA Lab Prep",
+    template: "%s — DSA Lab Prep",
+  },
   description:
-    "Complete DSA Lab Exam preparation dashboard covering Recursion, Linked Lists, Stack, Queue with interactive code examples, visual diagrams, and comparison tables.",
+    "Interactive DSA Lab Exam preparation — Recursion, Linked Lists, Stack, Queue with code examples and visual diagrams.",
   metadataBase: new URL("https://dsa-lab-prep.vercel.app"),
   openGraph: {
-    title: "DSA Lab Exam Prep",
+    title: "DSA Lab Prep",
     description: "Interactive DSA Lab Exam preparation dashboard",
     type: "website",
+    siteName: "DSA Lab Prep",
   },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
@@ -36,22 +47,18 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}
     >
-      <body className="min-h-full flex bg-[#06060f] text-[#e4e4ec] font-[family-name:var(--font-inter)]">
+      <body className="min-h-screen bg-black text-[#f5f5f7] font-[family-name:var(--font-inter)]">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[999] focus:px-4 focus:py-2 focus:bg-indigo-600 focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[999] focus:px-4 focus:py-2 focus:bg-[#0a84ff] focus:text-white focus:rounded-lg focus:text-sm focus:font-medium"
         >
           Skip to main content
         </a>
         <Sidebar />
-        <main
-          id="main-content"
-          role="main"
-          className="flex-1 lg:ml-[260px] min-h-screen"
-        >
-          <div className="max-w-[880px] mx-auto px-5 md:px-10 py-10 pb-24">
+        <main id="main-content" role="main" className="lg:pl-[272px]">
+          <div className="max-w-[860px] mx-auto px-6 sm:px-8 lg:px-10 py-12 pb-32">
             {children}
           </div>
         </main>

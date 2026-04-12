@@ -1,89 +1,88 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   SectionHeader, FadeIn, StaggerContainer, StaggerItem,
   Card, InfoCard,
 } from "@/components/ui-components";
 
-const cheatSheetData = [
+const sections = [
   {
-    title: "🔄 Recursion Patterns",
+    title: "Recursion",
     color: "#ff6b6b",
     items: [
       "n / 10 — removes last digit",
       "n % 10 — gets last digit",
-      "a * b = a + a*(b-1)",
-      "b^p = b * b^(p-1)",
-      "n! = n * (n-1)!",
+      "a × b = a + a×(b-1)",
+      "b^p = b × b^(p-1)",
+      "n! = n × (n-1)!",
       "Base case: n == 0 or n == 1",
       "Print before call → descending",
       "Print after call → ascending",
     ],
   },
   {
-    title: "🔗 Singly LL Key Code",
+    title: "Singly Linked List",
     color: "#4ecdc4",
     items: [
       "class Node { data; next; }",
-      "Head = NULL initially",
+      "head = NULL initially",
       "Insert beginning: O(1)",
       "Insert end: traverse to temp->next == NULL",
-      "Delete end: traverse to temp->next->next == NULL",
+      "Delete end: temp->next->next == NULL",
       "Position traversal: i < pos - 1",
       "Display: while(temp != NULL)",
     ],
   },
   {
-    title: "🔵 Circular LL Key Diffs",
+    title: "Circular LL Differences",
     color: "#45b7d1",
     items: [
       "Last node → head (not NULL)",
       "Empty first node: next = itself",
       "One node check: head->next == head",
       "Traverse: temp->next != head",
-      "Display: do-while loop",
-      "Insert/delete beginning: update last node too!",
+      "Display: do-while loop ⚠️",
+      "Insert/delete beginning: update last too",
       "Self-loop: newNode->next = newNode",
     ],
   },
   {
-    title: "📚 Stack Essentials",
-    color: "#feca57",
+    title: "Stack",
+    color: "#ffd60a",
     items: [
       "LIFO — Last In, First Out",
       "Array: top = -1, arr[++top]",
       "LL: top = NULL, insert at head",
       "isEmpty: top == -1 (arr) or NULL",
-      "isFull: top == maxSize - 1 (array only!)",
-      "Pop returns arr[top--]",
+      "isFull: top == maxSize-1 (array only!)",
+      "Pop: return arr[top--]",
       "Display: top to bottom",
     ],
   },
   {
-    title: "🚶 Queue Formulas",
-    color: "#a29bfe",
+    title: "Queue Formulas",
+    color: "#bf5af2",
     items: [
       "FIFO — First In, First Out",
       "Both: front = rear = -1",
-      "Simple full: rear == size - 1",
+      "Simple full: rear == size-1",
       "Circular full: (rear+1) % size == front",
       "Circular enqueue: rear = (rear+1) % size",
       "Circular dequeue: front = (front+1) % size",
-      "Last element: reset front = rear = -1",
+      "Last element removed: reset to -1",
     ],
   },
   {
-    title: "🔀 Node Swap Steps",
+    title: "Node Swap Steps",
     color: "#fd79a8",
     items: [
       "Find currX, prevX, currY, prevY",
       "Check if either value not found",
-      "Handle head cases separately",
+      "Handle head node cases",
       "prevX->next = currY",
       "prevY->next = currX",
       "Swap their next pointers",
-      "Uses temp variable for swap",
+      "Use temp variable for swap",
     ],
   },
 ];
@@ -91,32 +90,21 @@ const cheatSheetData = [
 export default function QuickReferencePage() {
   return (
     <div className="space-y-6">
-      <SectionHeader icon="⚡" title="Quick Reference" tag="Cheat Sheet" color="#00cec9" colorDim="rgba(0, 206, 201, 0.12)" />
+      <SectionHeader icon="⚡" title="Quick Reference" tag="Cheat Sheet" color="#30d158" colorDim="rgba(48,209,88,0.12)" />
 
-      <StaggerContainer className="grid md:grid-cols-2 gap-4">
-        {cheatSheetData.map((section, i) => (
+      <StaggerContainer className="grid sm:grid-cols-2 gap-4">
+        {sections.map((section, i) => (
           <StaggerItem key={i}>
-            <Card className="h-full hover:scale-[1.01] transition-transform duration-200">
-              <h4 className="text-[14px] font-bold mb-4 flex items-center gap-2" style={{ color: section.color }}>
-                {section.title}
-              </h4>
-              <ul className="space-y-1.5">
+            <Card className="h-full">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-2 h-2 rounded-full" style={{ background: section.color }} />
+                <h3 className="text-[14px] font-semibold text-[#f5f5f7]">{section.title}</h3>
+              </div>
+              <ul className="space-y-2">
                 {section.items.map((item, j) => (
-                  <li key={j} className="text-[13px] text-white/40 pl-4 relative leading-relaxed">
-                    <span className="absolute left-0 text-white/15 font-bold">›</span>
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: item
-                          .replace(
-                            /`([^`]+)`/g,
-                            '<code class="font-mono text-[12px] bg-white/[0.06] px-1 py-0.5 rounded text-white/70">$1</code>'
-                          )
-                          .replace(
-                            /([a-zA-Z_]+->[a-zA-Z_]+|[a-zA-Z_]+\[\+\+[a-zA-Z_]+\]|[a-zA-Z_]+\([^\)]*\)|[a-zA-Z_]+ == [^\s,]+|[a-zA-Z_]+ != [^\s,]+|\(rear\+1\) % size|front = rear = -1)/g,
-                            '<code class="font-mono text-[11px] bg-white/[0.06] px-1 py-0.5 rounded text-white/60">$&</code>'
-                          ),
-                      }}
-                    />
+                  <li key={j} className="text-[13px] text-[#86868b] leading-[1.5] flex gap-2">
+                    <span className="text-[#3d3d3f] mt-0.5 flex-shrink-0">›</span>
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -125,18 +113,17 @@ export default function QuickReferencePage() {
         ))}
       </StaggerContainer>
 
-      {/* Final exam reminders */}
       <FadeIn delay={0.4}>
-        <InfoCard title="🎯 Final Exam Reminders" icon="✅">
+        <InfoCard title="Final Exam Checklist" icon="✅">
           <div className="space-y-1.5">
-            <p>✅ Always use <code className="text-red-400 bg-white/5 px-1 rounded font-mono text-xs">class</code> — NEVER <code className="text-red-400 bg-white/5 px-1 rounded font-mono text-xs">struct</code></p>
-            <p>✅ <code className="bg-white/5 px-1 rounded font-mono text-xs">Node</code> class needs <code className="bg-white/5 px-1 rounded font-mono text-xs">public:</code> for data and next</p>
-            <p>✅ <code className="bg-white/5 px-1 rounded font-mono text-xs">LinkedList</code> class has <code className="bg-white/5 px-1 rounded font-mono text-xs">private: head</code> and <code className="bg-white/5 px-1 rounded font-mono text-xs">public:</code> methods</p>
-            <p>✅ Always check for <strong className="text-white/70">empty list</strong> and <strong className="text-white/70">single node</strong> edge cases</p>
-            <p>✅ Always <code className="bg-white/5 px-1 rounded font-mono text-xs">delete</code> nodes when removing (memory management)</p>
-            <p>✅ Circular LL display uses <strong className="text-white/70">do-while</strong> — common exam trick!</p>
-            <p>✅ Circular Queue uses <strong className="text-white/70">% operator</strong> for wrap-around — memorize the formulas</p>
-            <p>✅ Stack LL has NO isFull() — it can grow infinitely</p>
+            <p>✅ Always use <code>class</code> — NEVER <code>struct</code></p>
+            <p>✅ Node class needs <code>public:</code> for data and next</p>
+            <p>✅ LinkedList class has <code>private: head</code></p>
+            <p>✅ Check for <strong>empty list</strong> and <strong>single node</strong> edge cases</p>
+            <p>✅ Always <code>delete</code> nodes when removing</p>
+            <p>✅ Circular LL display uses <strong>do-while</strong></p>
+            <p>✅ Circular Queue uses <strong>% operator</strong></p>
+            <p>✅ Stack LL has NO isFull()</p>
           </div>
         </InfoCard>
       </FadeIn>

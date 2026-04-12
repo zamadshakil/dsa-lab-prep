@@ -5,95 +5,77 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { topics } from "@/data/code-examples";
 import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export function Sidebar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  useEffect(() => { setMobileOpen(false); }, [pathname]);
   useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
-
-  // Close on Escape key
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMobileOpen(false);
-    };
-    document.addEventListener("keydown", handleEsc);
-    return () => document.removeEventListener("keydown", handleEsc);
+    const onEsc = (e: KeyboardEvent) => { if (e.key === "Escape") setMobileOpen(false); };
+    document.addEventListener("keydown", onEsc);
+    return () => document.removeEventListener("keydown", onEsc);
   }, []);
 
   const navItems = [
-    { href: "/", label: "Dashboard", icon: "🏠", color: "#667eea" },
-    ...topics.map((t) => ({
-      href: `/${t.slug}`,
-      label: t.shortTitle,
-      icon: t.icon,
-      color: t.color,
-    })),
-    { href: "/quick-reference", label: "Quick Reference", icon: "⚡", color: "#00cec9" },
+    { href: "/", label: "Overview", icon: "🏠", color: "#86868b" },
+    ...topics.map((t) => ({ href: `/${t.slug}`, label: t.title, icon: t.icon, color: t.color })),
+    { href: "/quick-reference", label: "Quick Reference", icon: "⚡", color: "#30d158" },
   ];
 
-  const SidebarContent = () => (
+  const NavContent = () => (
     <div className="flex flex-col h-full">
-      {/* Header */}
-      <div className="p-5 pb-4 border-b border-white/[0.08]">
-        <Link
-          href="/"
-          className="flex items-center gap-3 group"
-          aria-label="DSA Lab Prep - Go to Dashboard"
-        >
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-lg shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/30 transition-shadow">
+      {/* Brand */}
+      <div className="px-5 pt-6 pb-5">
+        <Link href="/" className="flex items-center gap-3" aria-label="DSA Lab Prep Home">
+          <div className="w-9 h-9 rounded-[10px] bg-gradient-to-br from-[#5e5ce6] to-[#bf5af2] flex items-center justify-center text-[15px] shadow-lg shadow-purple-500/15">
             🧠
           </div>
           <div>
-            <h1 className="text-[15px] font-semibold tracking-[-0.02em] text-white/90">
+            <p className="text-[15px] font-semibold tracking-[-0.02em] text-[#f5f5f7]">
               DSA Lab Prep
-            </h1>
-            <p className="text-[10px] uppercase tracking-[0.1em] text-white/30 font-medium mt-0.5">
-              Mid-Term Exam
+            </p>
+            <p className="text-[11px] text-[#86868b] font-normal">
+              Mid-Term Exam 2026
             </p>
           </div>
         </Link>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-3 py-4" aria-label="Main navigation">
-        <p className="text-[10px] uppercase tracking-[0.14em] text-white/25 font-semibold px-3 mb-2">
-          Topics
-        </p>
-        <ul className="space-y-0.5 list-none">
+      {/* Divider */}
+      <div className="mx-4 h-px bg-[#2d2d2f]" />
+
+      {/* Nav */}
+      <nav className="flex-1 overflow-y-auto px-3 pt-4 pb-2" aria-label="Main navigation">
+        <ul className="space-y-[2px] list-none m-0 p-0">
           {navItems.map((item) => {
-            const isActive =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(item.href);
+            const isActive = item.href === "/" ? pathname === "/" : pathname === item.href;
             return (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "group flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13.5px] font-medium transition-all duration-200 relative",
+                    "flex items-center gap-3 px-3 py-[9px] rounded-[10px] text-[14px] transition-all duration-150 relative group",
                     isActive
-                      ? "text-white/95 bg-white/[0.07]"
-                      : "text-white/45 hover:text-white/75 hover:bg-white/[0.04]"
+                      ? "bg-[#1d1d1f] text-[#f5f5f7] font-medium"
+                      : "text-[#86868b] hover:text-[#f5f5f7] hover:bg-[#1d1d1f]/50"
                   )}
                 >
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeNav"
-                      className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full"
-                      style={{ background: item.color }}
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                  <span className="text-base" role="img" aria-hidden="true">
+                  <span className="text-[15px] w-5 text-center" role="img" aria-hidden="true">
                     {item.icon}
                   </span>
-                  <span className="tracking-[-0.01em]">{item.label}</span>
+                  <span className="flex-1 truncate">{item.label}</span>
+                  {isActive && (
+                    <motion.div
+                      layoutId="sidebar-active"
+                      className="absolute right-3 w-[5px] h-[5px] rounded-full"
+                      style={{ background: item.color }}
+                      transition={{ type: "spring", stiffness: 400, damping: 28 }}
+                    />
+                  )}
                 </Link>
               </li>
             );
@@ -102,11 +84,8 @@ export function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t border-white/[0.08] text-center">
+      <div className="px-5 py-4 border-t border-[#2d2d2f]">
         <ExamCountdown />
-        <p className="text-[11px] text-white/25 mt-1.5 font-medium">
-          Good Luck! 💪
-        </p>
       </div>
     </div>
   );
@@ -116,42 +95,34 @@ export function Sidebar() {
       {/* Mobile toggle */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+        aria-label={mobileOpen ? "Close menu" : "Open menu"}
         aria-expanded={mobileOpen}
-        className="lg:hidden fixed top-4 left-4 z-[200] w-11 h-11 rounded-xl border border-white/10 bg-[#0c0c1e]/95 backdrop-blur-xl text-white flex items-center justify-center shadow-lg"
+        className="lg:hidden fixed top-4 left-4 z-[200] w-10 h-10 rounded-[10px] bg-[#1d1d1f]/90 backdrop-blur-xl text-[#f5f5f7] flex items-center justify-center border border-[#2d2d2f]"
       >
-        {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+        {mobileOpen ? <X size={16} /> : <Menu size={16} />}
       </button>
 
-      {/* Desktop sidebar */}
-      <aside
-        className="hidden lg:flex fixed left-0 top-0 w-[260px] h-screen bg-[#080818]/95 backdrop-blur-2xl border-r border-white/[0.08] z-50 flex-col"
-        aria-label="Sidebar navigation"
-      >
-        <SidebarContent />
+      {/* Desktop */}
+      <aside className="hidden lg:flex fixed left-0 top-0 w-[272px] h-screen bg-black/80 backdrop-blur-2xl border-r border-[#2d2d2f] z-50 flex-col" aria-label="Navigation">
+        <NavContent />
       </aside>
 
-      {/* Mobile sidebar */}
+      {/* Mobile */}
       <AnimatePresence>
         {mobileOpen && (
           <>
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={() => setMobileOpen(false)}
-              className="fixed inset-0 bg-black/60 z-[150] lg:hidden"
-              aria-hidden="true"
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[150] lg:hidden" aria-hidden="true"
             />
             <motion.aside
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed left-0 top-0 w-[260px] h-screen bg-[#080818]/98 backdrop-blur-2xl border-r border-white/[0.08] z-[160] flex flex-col lg:hidden"
+              initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }}
+              transition={{ type: "spring", stiffness: 400, damping: 35 }}
+              className="fixed left-0 top-0 w-[272px] h-screen bg-[#0a0a0a]/98 backdrop-blur-2xl border-r border-[#2d2d2f] z-[160] flex flex-col lg:hidden"
               aria-label="Mobile navigation"
             >
-              <SidebarContent />
+              <NavContent />
             </motion.aside>
           </>
         )}
@@ -161,32 +132,31 @@ export function Sidebar() {
 }
 
 function ExamCountdown() {
-  const [timeStr, setTimeStr] = useState("⏰ Calculating...");
+  const [timeStr, setTimeStr] = useState("");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const update = () => {
       const exam = new Date("2026-04-13T09:00:00+05:00");
       const now = new Date();
       const diff = exam.getTime() - now.getTime();
-
-      if (diff <= 0) {
-        setTimeStr("🔥 Exam Day! Good Luck!");
-        return;
-      }
-
+      if (diff <= 0) { setTimeStr("Exam day — you got this!"); return; }
       const hrs = Math.floor(diff / (1000 * 60 * 60));
       const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      setTimeStr(`⏰ ${hrs}h ${mins}m until exam`);
+      setTimeStr(`${hrs}h ${mins}m until exam`);
     };
-
     update();
     const interval = setInterval(update, 60000);
     return () => clearInterval(interval);
   }, []);
 
+  if (!mounted) return null;
+
   return (
-    <p className="text-[12px] font-semibold text-red-400/90" aria-live="polite">
-      {timeStr}
-    </p>
+    <div className="flex items-center gap-2" aria-live="polite">
+      <div className="w-2 h-2 rounded-full bg-[#ff453a] animate-pulse" />
+      <p className="text-[12px] text-[#86868b] font-medium">{timeStr}</p>
+    </div>
   );
 }

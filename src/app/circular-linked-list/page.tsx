@@ -2,51 +2,37 @@
 
 import { codeExamples } from "@/data/code-examples";
 import { CodeBlock } from "@/components/code-block";
-import {
-  SectionHeader, FadeIn,
-  Card, NodeChain, ComparisonTable,
-} from "@/components/ui-components";
+import { SectionHeader, FadeIn, Card, NodeChain, ComparisonTable } from "@/components/ui-components";
 
 export default function CircularLinkedListPage() {
-  const color = "#45b7d1";
-  const colorDim = "rgba(69, 183, 209, 0.12)";
-
   return (
     <div className="space-y-6">
-      <SectionHeader icon="🔵" title="Circular Linked List" tag="Topic 3" color={color} colorDim={colorDim} />
+      <SectionHeader icon="🔵" title="Circular Linked List" tag="Topic 3" color="#45b7d1" colorDim="rgba(69,183,209,0.12)" />
 
-      {/* Theory */}
       <FadeIn delay={0.1}>
         <Card>
-          <h3 className="text-[15px] font-bold mb-3 flex items-center gap-2">
-            <span>📖</span> Circular vs Singly — The Key Difference
-          </h3>
-          <div className="text-sm text-white/45 leading-relaxed space-y-2">
+          <h2 className="text-[17px] font-semibold text-[#f5f5f7] mb-3 tracking-[-0.01em]">Circular vs Singly — The Key Difference</h2>
+          <div className="text-[14px] text-[#a1a1a6] leading-[1.7] space-y-3">
+            <p>The <strong className="text-[#f5f5f7]">last node points back to head</strong> instead of NULL. No NULL termination.</p>
             <p>
-              In a circular linked list, the <strong className="text-white/80">last node points back to head</strong> instead of NULL.
-              There is <strong className="text-white/80">no NULL termination</strong>. This creates a continuous loop.
-            </p>
-            <p>
-              <strong className="text-white/80">Critical code differences:</strong><br />
-              • Empty check for single node: <code className="bg-white/5 px-1 rounded font-mono text-xs">head-&gt;next == head</code> (not <code className="bg-white/5 px-1 rounded font-mono text-xs">== NULL</code>)<br />
-              • Traversal: <code className="bg-white/5 px-1 rounded font-mono text-xs">while(temp-&gt;next != head)</code> (not <code className="bg-white/5 px-1 rounded font-mono text-xs">!= NULL</code>)<br />
-              • Display: Uses <code className="text-red-400 bg-white/5 px-1 rounded font-mono text-xs">do-while</code> loop (not while)<br />
-              • Insert at beginning: Must also update <strong className="text-white/80">last node{"'"}s next</strong> pointer
+              <strong className="text-[#f5f5f7]">Critical code differences:</strong><br />
+              • Empty single node: <code>head-&gt;next == head</code> (not NULL)<br />
+              • Traversal: <code>while(temp-&gt;next != head)</code><br />
+              • Display: Uses <code className="!text-[#ff453a]">do-while</code> loop<br />
+              • Insert at beginning: Must also update <strong className="text-[#f5f5f7]">last node{"'"}s next</strong>
             </p>
           </div>
         </Card>
       </FadeIn>
 
-      {/* Visual */}
       <FadeIn delay={0.15}>
-        <NodeChain nodes={[9, 2, 7, 1, 3]} color={color} isCircular headLabel="head" />
+        <NodeChain nodes={[9, 2, 7, 1, 3]} color="#45b7d1" isCircular headLabel="head" />
       </FadeIn>
 
-      {/* Critical Diff Table */}
       <FadeIn delay={0.2}>
         <ComparisonTable
           title="Singly vs Circular — Critical Differences"
-          color={color}
+          color="#45b7d1"
           headers={["Aspect", "Singly LL", "Circular LL"]}
           rows={[
             { aspect: "Last node points to", col1: "NULL", col2: "head" },
@@ -60,13 +46,8 @@ export default function CircularLinkedListPage() {
         />
       </FadeIn>
 
-      {/* Full Code */}
       <FadeIn delay={0.25}>
-        <CodeBlock
-          title="Complete Circular Linked List"
-          accentColor={color}
-          code={codeExamples.circular_full}
-        />
+        <CodeBlock title="Complete Circular Linked List" accentColor="#45b7d1" code={codeExamples.circular_full} />
       </FadeIn>
     </div>
   );

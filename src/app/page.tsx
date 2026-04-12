@@ -3,149 +3,136 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { topics } from "@/data/code-examples";
-import { ArrowRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 export default function HomePage() {
   return (
     <div>
       {/* Hero */}
       <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="text-center pt-16 pb-14 relative"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="pt-8 sm:pt-16 pb-12 sm:pb-16"
       >
-        {/* Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-indigo-500/[0.04] rounded-full blur-3xl pointer-events-none" />
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-full text-[12px] font-bold text-indigo-400 uppercase tracking-wider mb-5"
+          className="text-[13px] font-medium text-[#86868b] uppercase tracking-[0.05em] mb-4"
         >
-          📚 Mid-Term Lab Exam
-        </motion.div>
+          Mid-Term Lab Exam
+        </motion.p>
 
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-4">
-          <span className="bg-gradient-to-b from-white via-white/90 to-white/40 bg-clip-text text-transparent">
-            DSA Lab Exam
-          </span>
-          <br />
-          <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient">
-            Command Center
-          </span>
-        </h1>
+        <motion.h1
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="text-[40px] sm:text-[56px] font-bold tracking-[-0.04em] leading-[1.05] text-[#f5f5f7] mb-5"
+        >
+          DSA Lab Prep.
+        </motion.h1>
 
-        <p className="text-sm md:text-base text-white/35 max-w-md mx-auto leading-relaxed">
-          Every code, every concept, every difference — organized and ready.
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-[17px] sm:text-[19px] text-[#86868b] leading-[1.5] max-w-lg tracking-[-0.01em]"
+        >
+          Every data structure. Every algorithm. Every code example — using{" "}
+          <span className="text-[#f5f5f7] font-medium">class</span>, not struct.
           <br />
-          All code uses <strong className="text-white/60">class</strong> (no struct).
-        </p>
+          Ready for tomorrow.
+        </motion.p>
       </motion.section>
 
       {/* Topic Grid */}
       <motion.div
         initial="hidden"
         animate="visible"
-        variants={{
-          hidden: {},
-          visible: { transition: { staggerChildren: 0.08 } },
-        }}
-        className="grid gap-4 md:grid-cols-2"
+        variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.06 } } }}
+        className="space-y-3"
       >
         {topics.map((topic) => (
           <motion.div
             key={topic.slug}
             variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.45 } },
+              hidden: { opacity: 0, y: 8 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.35 } },
             }}
           >
             <Link href={`/${topic.slug}`}>
-              <div
-                className="group relative rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6 hover:bg-white/[0.04] hover:border-white/[0.14] transition-all duration-300 cursor-pointer overflow-hidden"
-              >
-                {/* Subtle glow on hover */}
+              <div className="group flex items-center gap-4 sm:gap-5 p-4 sm:p-5 rounded-2xl bg-[#111113] border border-[#2d2d2f] hover:border-[#3d3d3f] hover:bg-[#161618] transition-all duration-200 cursor-pointer">
                 <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{
-                    background: `radial-gradient(circle at 50% 50%, ${topic.color}08, transparent 70%)`,
-                  }}
-                />
-
-                <div className="relative flex items-start gap-4">
-                  <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
-                    style={{ background: topic.colorDim, color: topic.color }}
-                  >
-                    {topic.icon}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-bold text-[15px] text-white/90 tracking-tight">
-                        {topic.title}
-                      </h3>
-                      <span
-                        className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
-                        style={{ background: topic.colorDim, color: topic.color }}
-                      >
-                        {topic.tag}
-                      </span>
-                    </div>
-                    <p className="text-[13px] text-white/30">{topic.description}</p>
-                  </div>
-                  <ArrowRight
-                    size={16}
-                    className="text-white/10 group-hover:text-white/30 group-hover:translate-x-1 transition-all duration-200 mt-1 flex-shrink-0"
-                  />
+                  className="w-11 h-11 sm:w-12 sm:h-12 rounded-[14px] flex items-center justify-center text-[20px] flex-shrink-0"
+                  style={{ background: `${topic.color}12`, color: topic.color }}
+                >
+                  {topic.icon}
                 </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2.5 mb-0.5">
+                    <h3 className="font-semibold text-[15px] text-[#f5f5f7] tracking-[-0.01em]">
+                      {topic.title}
+                    </h3>
+                    <span
+                      className="text-[10px] font-semibold uppercase tracking-[0.04em] px-2 py-0.5 rounded-md hidden sm:inline-block"
+                      style={{ background: `${topic.color}15`, color: topic.color }}
+                    >
+                      {topic.tag}
+                    </span>
+                  </div>
+                  <p className="text-[13px] text-[#6e6e73] truncate">{topic.description}</p>
+                </div>
+                <ChevronRight
+                  size={16}
+                  className="text-[#3d3d3f] group-hover:text-[#6e6e73] group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0"
+                />
               </div>
             </Link>
           </motion.div>
         ))}
 
-        {/* Quick Reference Card */}
+        {/* Quick Reference */}
         <motion.div
           variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0, transition: { duration: 0.45 } },
+            hidden: { opacity: 0, y: 8 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.35 } },
           }}
-          className="md:col-span-2"
         >
           <Link href="/quick-reference">
-            <div className="group relative rounded-2xl border border-white/[0.07] bg-gradient-to-r from-emerald-500/[0.04] to-cyan-500/[0.04] p-6 hover:border-emerald-500/20 transition-all duration-300 cursor-pointer">
-              <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-emerald-500/10 flex items-center justify-center text-xl">
-                  ⚡
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-bold text-[15px] text-white/90 tracking-tight">
-                    Quick Reference — Cheat Sheet
-                  </h3>
-                  <p className="text-[13px] text-white/30">
-                    All formulas, patterns, and key differences on one page
-                  </p>
-                </div>
-                <ArrowRight
-                  size={16}
-                  className="text-white/10 group-hover:text-white/30 group-hover:translate-x-1 transition-all duration-200"
-                />
+            <div className="group flex items-center gap-4 sm:gap-5 p-4 sm:p-5 rounded-2xl bg-[#111113] border border-[#2d2d2f] hover:border-[#30d158]/30 transition-all duration-200 cursor-pointer">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-[14px] bg-[#30d158]/10 flex items-center justify-center text-[20px] flex-shrink-0">
+                ⚡
               </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-[15px] text-[#f5f5f7] tracking-[-0.01em] mb-0.5">
+                  Quick Reference
+                </h3>
+                <p className="text-[13px] text-[#6e6e73]">
+                  All formulas, patterns, and key differences in one place
+                </p>
+              </div>
+              <ChevronRight
+                size={16}
+                className="text-[#3d3d3f] group-hover:text-[#6e6e73] group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0"
+              />
             </div>
           </Link>
         </motion.div>
       </motion.div>
 
-      {/* Bottom reminder */}
+      {/* Reminder */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.8 }}
-        className="mt-10 text-center"
+        transition={{ delay: 0.6 }}
+        className="mt-10"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500/[0.06] border border-red-500/[0.15] text-red-400 text-[13px] font-semibold">
-          ⚠️ Remember: Use <code className="bg-white/10 px-1.5 py-0.5 rounded text-[12px] font-mono mx-1">class</code> NOT <code className="bg-white/10 px-1.5 py-0.5 rounded text-[12px] font-mono mx-1">struct</code> in your exam!
+        <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#ff453a]/[0.06] border border-[#ff453a]/[0.12]">
+          <div className="w-2 h-2 rounded-full bg-[#ff453a]" />
+          <p className="text-[13px] text-[#ff453a] font-medium">
+            Remember: Use <code className="bg-[#1d1d1f] px-1.5 py-0.5 rounded-md font-[family-name:var(--font-jetbrains)] text-[12px]">class</code> NOT <code className="bg-[#1d1d1f] px-1.5 py-0.5 rounded-md font-[family-name:var(--font-jetbrains)] text-[12px]">struct</code>
+          </p>
         </div>
       </motion.div>
     </div>

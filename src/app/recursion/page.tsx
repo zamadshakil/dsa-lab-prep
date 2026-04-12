@@ -8,65 +8,59 @@ import {
 } from "@/components/ui-components";
 
 export default function RecursionPage() {
-  const color = "#ff6b6b";
-  const colorDim = "rgba(255, 107, 107, 0.12)";
-
   return (
     <div className="space-y-6">
-      <SectionHeader icon="🔄" title="Recursion" tag="Topic 1" color={color} colorDim={colorDim} />
+      <SectionHeader icon="🔄" title="Recursion" tag="Topic 1" color="#ff6b6b" colorDim="rgba(255,107,107,0.12)" />
 
-      {/* Theory */}
       <FadeIn delay={0.1}>
         <Card>
-          <h3 className="text-[15px] font-bold mb-3 flex items-center gap-2">
-            <span>📖</span> What is Recursion?
-          </h3>
-          <div className="text-sm text-white/45 leading-relaxed space-y-2">
+          <h2 className="text-[17px] font-semibold text-[#f5f5f7] mb-3 tracking-[-0.01em]">
+            What is Recursion?
+          </h2>
+          <div className="text-[14px] text-[#a1a1a6] leading-[1.7] space-y-3">
             <p>
-              A function that <strong className="text-white/80">calls itself</strong> to solve smaller sub-problems. Every recursive function needs:
+              A function that <strong className="text-[#f5f5f7]">calls itself</strong> to solve smaller sub-problems. Every recursive function needs:
             </p>
+            <ol className="list-decimal list-inside space-y-1 pl-1">
+              <li><strong className="text-[#f5f5f7]">Base Case</strong> — stops the recursion (prevents infinite loop)</li>
+              <li><strong className="text-[#f5f5f7]">Recursive Case</strong> — function calls itself with simpler input</li>
+            </ol>
             <p>
-              1. <strong className="text-white/80">Base Case</strong> — stops the recursion (prevents infinite loop)<br />
-              2. <strong className="text-white/80">Recursive Case</strong> — function calls itself with simpler input
-            </p>
-            <p>
-              <strong className="text-white/80">How it works:</strong> Each call is pushed onto the <strong className="text-white/80">call stack</strong>. When base case is hit, calls return one by one (unwinding).
+              Each call is pushed onto the <strong className="text-[#f5f5f7]">call stack</strong>. When base case is hit, calls return one by one (unwinding).
             </p>
           </div>
         </Card>
       </FadeIn>
 
-      {/* Key Points */}
       <FadeIn delay={0.15}>
-        <StaggerContainer className="grid md:grid-cols-2 gap-3">
+        <StaggerContainer className="grid sm:grid-cols-2 gap-3">
           <StaggerItem>
             <KeyPoint icon="⚡">
-              <strong>LIFO in call stack</strong> — Last called function returns first. That{"'"}s why printing AFTER recursive call gives ascending order.
+              <strong>LIFO in call stack</strong> — Last called function returns first. Print AFTER recursive call = ascending.
             </KeyPoint>
           </StaggerItem>
           <StaggerItem>
             <KeyPoint icon="🎯">
-              <strong>Base case is MANDATORY</strong> — Without it you get infinite recursion → stack overflow crash.
+              <strong>Base case is mandatory</strong> — Without it → infinite recursion → stack overflow crash.
             </KeyPoint>
           </StaggerItem>
           <StaggerItem>
             <KeyPoint icon="🔬">
-              <strong>Print before call</strong> = descending. <strong>Print after call</strong> = ascending. Key to output tracing.
+              <strong>Print before call</strong> = descending. <strong>Print after call</strong> = ascending.
             </KeyPoint>
           </StaggerItem>
           <StaggerItem>
             <KeyPoint icon="📊">
-              <strong>Time: O(n)</strong> for linear recursion. <strong>Space: O(n)</strong> due to call stack frames.
+              <strong>Time: O(n)</strong> for linear recursion. <strong>Space: O(n)</strong> due to call stack.
             </KeyPoint>
           </StaggerItem>
         </StaggerContainer>
       </FadeIn>
 
-      {/* Code Block */}
       <FadeIn delay={0.2}>
         <CodeBlock
           title="recursion"
-          accentColor={color}
+          accentColor="#ff6b6b"
           tabs={[
             { label: "Print Pattern", code: codeExamples.recursion_print_pattern },
             { label: "Ascending", code: codeExamples.recursion_ascending },
@@ -80,15 +74,13 @@ export default function RecursionPage() {
         />
       </FadeIn>
 
-      {/* Exam Tip */}
       <FadeIn delay={0.25}>
-        <InfoCard title="Exam Tip — Tracing Recursion Output" icon="💡">
-          <p className="space-y-1">
-            For <code className="text-red-400 bg-white/5 px-1 rounded font-mono text-xs">f(5)</code> where print is <strong className="text-white/70">before AND after</strong> call: <code className="bg-white/5 px-1 rounded font-mono text-xs">5 3 1 1 3 5</code><br />
-            • Going IN (before call): prints 5, 3, 1 (descending by 2)<br />
-            • Coming BACK (after call): prints 1, 3, 5 (stack unwinds)<br /><br />
-            <strong className="text-white/70">Pattern formula:</strong> <code className="bg-white/5 px-1 rounded font-mono text-xs">n % 10</code> = last digit, <code className="bg-white/5 px-1 rounded font-mono text-xs">n / 10</code> = remove last digit
+        <InfoCard title="Exam Tip — Tracing Output" icon="💡">
+          <p>
+            For <code>f(5)</code> where print is before AND after call: <code>5 3 1 1 3 5</code>
           </p>
+          <p>Going IN: prints 5, 3, 1 — Coming BACK: prints 1, 3, 5</p>
+          <p><strong>Pattern:</strong> <code>n % 10</code> = last digit, <code>n / 10</code> = remove last digit</p>
         </InfoCard>
       </FadeIn>
     </div>
