@@ -20,28 +20,28 @@ export function Sidebar() {
   }, []);
 
   const navItems = [
-    { href: "/", label: "Overview", color: "#0071e3" },
-    ...topics.map((t) => ({ href: `/${t.slug}`, label: t.title, color: t.color })),
-    { href: "/quick-reference", label: "Quick Reference", color: "#34c759" },
+    { href: "/", label: "Overview" },
+    ...topics.map((t) => ({ href: `/${t.slug}`, label: t.title })),
+    { href: "/quick-reference", label: "Quick Reference" },
   ];
 
   const Nav = () => (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-white/70 backdrop-blur-2xl">
       {/* Brand */}
       <div className="px-6 pt-7 pb-5">
         <Link href="/" className="block group" aria-label="Home">
-          <p className="text-[17px] font-bold tracking-[-0.025em] text-[#1d1d1f] group-hover:text-[#0071e3] transition-colors">
+          <p className="text-[17px] font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
             DSA Lab Prep
           </p>
-          <p className="text-[12px] text-[#86868b] font-medium mt-0.5">Mid-Term Exam · 2026</p>
+          <p className="text-[12px] text-slate-500 font-medium mt-0.5">Mid-Term Exam · 2026</p>
         </Link>
       </div>
 
-      <div className="mx-5 h-px bg-[#d2d2d7]/60" />
+      <div className="mx-5 h-px bg-slate-200" />
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-3 pt-4 pb-3" aria-label="Main navigation">
-        <ul className="space-y-[2px] list-none m-0 p-0">
+      <nav className="flex-1 overflow-y-auto px-4 pt-5 pb-3" aria-label="Main navigation">
+        <ul className="space-y-1 list-none m-0 p-0">
           {navItems.map((item) => {
             const isActive = item.href === "/" ? pathname === "/" : pathname === item.href;
             return (
@@ -50,16 +50,16 @@ export function Sidebar() {
                   href={item.href}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "flex items-center gap-3 px-3 py-[10px] rounded-xl text-[14px] transition-all duration-150",
+                    "flex items-center gap-3 px-3 py-2.5 rounded-[12px] text-[14px] font-medium transition-all duration-200",
                     isActive
-                      ? "bg-[#f5f5f7] text-[#1d1d1f] font-semibold shadow-[inset_0_0_0_1px_rgba(0,0,0,0.04)]"
-                      : "text-[#424245] hover:bg-[#f5f5f7]/70 hover:text-[#1d1d1f]"
+                      ? "bg-blue-50 text-blue-600 shadow-sm border border-blue-100/50"
+                      : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 border border-transparent"
                   )}
                 >
                   <div className={cn(
-                    "w-[7px] h-[7px] rounded-full flex-shrink-0 transition-all",
-                    isActive ? "opacity-100 scale-100" : "opacity-20 scale-75"
-                  )} style={{ background: item.color }} />
+                    "w-[6px] h-[6px] rounded-full flex-shrink-0 transition-all duration-300",
+                    isActive ? "bg-blue-600 opacity-100 scale-100" : "bg-slate-300 opacity-0 scale-75 hidden"
+                  )} />
                   <span className="truncate">{item.label}</span>
                 </Link>
               </li>
@@ -69,7 +69,7 @@ export function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="px-5 py-4 border-t border-[#d2d2d7]/40">
+      <div className="px-6 py-5 border-t border-slate-200/60">
         <ExamCountdown />
       </div>
     </div>
@@ -79,12 +79,12 @@ export function Sidebar() {
     <>
       {/* Mobile toggle */}
       <button onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}
-        className="lg:hidden fixed top-4 left-4 z-[200] w-10 h-10 rounded-xl bg-white/90 backdrop-blur-xl text-[#1d1d1f] flex items-center justify-center shadow-md border border-[#d2d2d7]/30">
+        className="lg:hidden fixed top-4 left-4 z-[200] w-10 h-10 rounded-xl bg-white/90 backdrop-blur-xl text-slate-900 flex items-center justify-center shadow-md border border-slate-200/50">
         {open ? <X size={16} /> : <Menu size={16} />}
       </button>
 
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex fixed left-0 top-0 w-[280px] h-screen bg-white border-r border-[#d2d2d7]/40 z-50 flex-col" aria-label="Navigation">
+      <aside className="hidden lg:flex fixed left-0 top-0 w-[280px] h-screen border-r border-slate-200 z-50 flex-col" aria-label="Navigation">
         <Nav />
       </aside>
 
@@ -93,10 +93,10 @@ export function Sidebar() {
         {open && (
           <>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)}
-              className="fixed inset-0 bg-black/15 backdrop-blur-sm z-[150] lg:hidden" aria-hidden="true" />
+              className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-[150] lg:hidden" aria-hidden="true" />
             <motion.aside initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }}
               transition={{ type: "spring", stiffness: 400, damping: 35 }}
-              className="fixed left-0 top-0 w-[280px] h-screen bg-white border-r border-[#d2d2d7]/40 z-[160] flex flex-col lg:hidden shadow-2xl" aria-label="Mobile navigation">
+              className="fixed left-0 top-0 w-[280px] h-screen border-r border-slate-200 z-[160] flex flex-col lg:hidden shadow-2xl" aria-label="Mobile navigation">
               <Nav />
             </motion.aside>
           </>
@@ -124,9 +124,9 @@ function ExamCountdown() {
 
   if (!mounted) return null;
   return (
-    <div className="flex items-center gap-2.5" aria-live="polite">
-      <div className="w-[6px] h-[6px] rounded-full bg-[#ff3b30] animate-pulse" />
-      <p className="text-[12px] text-[#86868b] font-medium">{time}</p>
+    <div className="flex items-center gap-3 bg-red-50/50 border border-red-100 rounded-[12px] p-3" aria-live="polite">
+      <div className="w-[8px] h-[8px] rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)] animate-pulse" />
+      <p className="text-[13px] text-red-600 font-medium tracking-tight">{time}</p>
     </div>
   );
 }

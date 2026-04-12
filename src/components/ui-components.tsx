@@ -41,8 +41,8 @@ export function SectionHeader({ icon, title, tag, color, colorDim }: {
   return (
     <FadeIn>
       <div className="mb-8">
-        <p className="text-[12px] font-semibold uppercase tracking-[0.08em] mb-2.5" style={{ color }}>{tag}</p>
-        <h1 className="text-[28px] sm:text-[36px] font-bold tracking-[-0.035em] leading-[1.12] text-[#1d1d1f]">{title}</h1>
+        <p className="text-[12px] font-semibold uppercase tracking-[0.08em] mb-2.5 text-slate-500">{tag}</p>
+        <h1 className="text-[28px] sm:text-[36px] font-bold tracking-[-0.035em] leading-[1.12] text-slate-900">{title}</h1>
       </div>
     </FadeIn>
   );
@@ -52,7 +52,7 @@ export function SectionHeader({ icon, title, tag, color, colorDim }: {
 export function Card({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <div className={cn(
-      "rounded-2xl bg-white p-5 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_0_0_1px_rgba(0,0,0,0.03)]",
+      "rounded-[20px] bg-white p-5 sm:p-6 shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:-translate-y-[2px] transition-all duration-300",
       className
     )}>
       {children}
@@ -63,12 +63,12 @@ export function Card({ children, className }: { children: React.ReactNode; class
 // ===== INFO CARD =====
 export function InfoCard({ title, children, icon = "💡" }: { title: string; children: React.ReactNode; icon?: string }) {
   return (
-    <div className="rounded-2xl bg-[#eef4ff] p-5 sm:p-6 shadow-[0_0_0_1px_rgba(0,113,227,0.08)]">
+    <div className="rounded-[20px] bg-slate-50 p-5 sm:p-6 shadow-[var(--shadow-sm)] border border-slate-200">
       <div className="flex items-center gap-2 mb-2.5">
         <span role="img" aria-hidden="true" className="text-sm">{icon}</span>
-        <p className="text-[13px] font-bold text-[#0071e3] uppercase tracking-[0.04em]">{title}</p>
+        <p className="text-[13px] font-bold text-blue-600 uppercase tracking-[0.04em]">{title}</p>
       </div>
-      <div className="text-[14px] text-[#424245] leading-[1.7] [&_strong]:text-[#1d1d1f] [&_strong]:font-semibold [&_code]:font-[family-name:var(--font-jetbrains)] [&_code]:text-[12px] [&_code]:bg-white/70 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-[#5856d6] [&_p]:mb-1">
+      <div className="text-[14px] text-slate-600 leading-[1.7] [&_strong]:text-slate-900 [&_strong]:font-semibold [&_code]:font-[family-name:var(--font-jetbrains)] [&_code]:text-[12px] [&_code]:bg-white [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-blue-600 [&_code]:shadow-sm [&_p]:mb-1">
         {children}
       </div>
     </div>
@@ -78,9 +78,9 @@ export function InfoCard({ title, children, icon = "💡" }: { title: string; ch
 // ===== KEY POINT =====
 export function KeyPoint({ icon, children }: { icon: string; children: React.ReactNode }) {
   return (
-    <div className="flex gap-3 p-4 rounded-xl bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04),0_0_0_1px_rgba(0,0,0,0.03)] hover:shadow-[0_2px_8px_rgba(0,0,0,0.06),0_0_0_1px_rgba(0,0,0,0.04)] transition-shadow duration-200">
+    <div className="flex gap-3 p-5 rounded-[20px] bg-white shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:-translate-y-[2px] transition-all duration-300">
       <span className="text-base flex-shrink-0 mt-0.5" role="img" aria-hidden="true">{icon}</span>
-      <div className="text-[14px] text-[#424245] leading-[1.65] [&_strong]:text-[#1d1d1f] [&_strong]:font-semibold [&_code]:font-[family-name:var(--font-jetbrains)] [&_code]:text-[12px] [&_code]:bg-[#f5f5f7] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-[#0071e3]">
+      <div className="text-[14px] text-slate-600 leading-[1.65] [&_strong]:text-slate-900 [&_strong]:font-semibold [&_code]:font-[family-name:var(--font-jetbrains)] [&_code]:text-[12px] [&_code]:bg-slate-50 [&_code]:border [&_code]:border-slate-200 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-blue-600">
         {children}
       </div>
     </div>
@@ -94,26 +94,26 @@ export function ComparisonTable({ title, color, headers, rows }: {
   title: string; color: string; headers: [string, string, string]; rows: CompRow[];
 }) {
   return (
-    <div className="rounded-2xl bg-white overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04),0_0_0_1px_rgba(0,0,0,0.03)]">
-      <div className="px-5 sm:px-6 py-4 border-b border-[#e8e8ed] flex items-center gap-2.5">
-        <div className="w-[7px] h-[7px] rounded-full" style={{ background: color }} />
-        <p className="text-[14px] font-semibold text-[#1d1d1f]">{title}</p>
+    <div className="rounded-[20px] bg-white overflow-hidden shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] transition-shadow duration-300 border border-slate-100">
+      <div className="px-5 sm:px-6 py-4 border-b border-slate-100 flex items-center gap-2.5">
+        <div className="w-[8px] h-[8px] rounded-full bg-blue-500" />
+        <p className="text-[14px] font-semibold text-slate-900">{title}</p>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full" role="table" aria-label={title}>
           <thead>
-            <tr className="border-b border-[#e8e8ed] bg-[#fafafa]">
+            <tr className="border-b border-slate-100 bg-slate-50/50">
               {headers.map((h, i) => (
-                <th key={i} scope="col" className="px-5 sm:px-6 py-2.5 text-left text-[11px] font-semibold text-[#86868b] uppercase tracking-[0.06em]">{h}</th>
+                <th key={i} scope="col" className="px-5 sm:px-6 py-3 text-left text-[11px] font-semibold text-slate-500 uppercase tracking-[0.06em]">{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {rows.map((row, i) => (
-              <tr key={i} className="border-b border-[#f0f0f5] last:border-b-0 hover:bg-[#fafafa] transition-colors">
-                <td className="px-5 sm:px-6 py-3 text-[13px] font-medium text-[#1d1d1f]">{row.aspect}</td>
-                <td className="px-5 sm:px-6 py-3 text-[13px] font-[family-name:var(--font-jetbrains)] text-[#86868b]">{row.col1}</td>
-                <td className="px-5 sm:px-6 py-3 text-[13px] font-[family-name:var(--font-jetbrains)] text-[#0071e3] font-medium">{row.col2}</td>
+              <tr key={i} className="border-b border-slate-50 last:border-b-0 hover:bg-slate-50 transition-colors">
+                <td className="px-5 sm:px-6 py-3.5 text-[13px] font-medium text-slate-900">{row.aspect}</td>
+                <td className="px-5 sm:px-6 py-3.5 text-[13px] font-[family-name:var(--font-jetbrains)] text-slate-500">{row.col1}</td>
+                <td className="px-5 sm:px-6 py-3.5 text-[13px] font-[family-name:var(--font-jetbrains)] text-blue-600 font-medium">{row.col2}</td>
               </tr>
             ))}
           </tbody>
@@ -129,32 +129,31 @@ export function NodeChain({ nodes, color, isCircular = false, headLabel = "head"
 }) {
   return (
     <Card className="flex flex-col items-center py-8 sm:py-10 overflow-x-auto" aria-label={isCircular ? "Circular Linked List diagram" : "Singly Linked List diagram"}>
-      <p className="text-[11px] uppercase tracking-[0.1em] text-[#86868b] font-semibold mb-5">
+      <p className="text-[11px] uppercase tracking-[0.1em] text-slate-400 font-semibold mb-5">
         {isCircular ? "Circular Linked List" : "Singly Linked List"}
       </p>
       <div className="flex items-center gap-0 px-4">
         {nodes.map((val, i) => (
           <div key={i} className="flex items-center">
             <div className="flex flex-col items-center">
-              {i === 0 && <span className="text-[10px] font-bold px-2 py-0.5 rounded-md mb-2" style={{ background: `${color}14`, color }}>{headLabel}</span>}
+              {i === 0 && <span className="text-[10px] font-bold px-2 py-0.5 rounded-md mb-2 bg-blue-50 text-blue-600">{headLabel}</span>}
               <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}
                 transition={{ delay: i * 0.08, type: "spring", stiffness: 400, damping: 20 }}
-                className="w-14 h-12 rounded-xl border-2 flex items-center justify-center font-semibold text-[14px]"
-                style={{ borderColor: color, color, background: `${color}06` }}>
+                className="w-14 h-12 rounded-xl border-2 flex items-center justify-center font-semibold text-[14px] border-slate-200 text-slate-700 bg-white shadow-sm">
                 {val}
               </motion.div>
-              {isCircular && i === nodes.length - 1 && <span className="text-[10px] mt-2 font-bold text-[#ff3b30]">↻ head</span>}
+              {isCircular && i === nodes.length - 1 && <span className="text-[10px] mt-2 font-bold text-red-500">↻ head</span>}
             </div>
             {i < nodes.length - 1 && (
               <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.08 + 0.04 }}
-                className="text-[#c5c5ca] px-2 text-sm">→</motion.span>
+                className="text-slate-300 px-2 text-sm">→</motion.span>
             )}
           </div>
         ))}
         {!isCircular && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: nodes.length * 0.08 }} className="flex items-center">
-            <span className="text-[#c5c5ca] px-2 text-sm">→</span>
-            <span className="px-3 py-2 border-2 border-dashed border-[#d2d2d7] rounded-lg text-[11px] font-bold text-[#aeaeb2] tracking-wider">NULL</span>
+            <span className="text-slate-300 px-2 text-sm">→</span>
+            <span className="px-3 py-2 border-2 border-dashed border-slate-200 rounded-lg text-[11px] font-bold text-slate-400 tracking-wider">NULL</span>
           </motion.div>
         )}
       </div>
@@ -166,18 +165,17 @@ export function NodeChain({ nodes, color, isCircular = false, headLabel = "head"
 export function StackVisual({ items, label, color = "#ff9500" }: { items: number[]; label: string; color?: string }) {
   return (
     <div className="flex flex-col items-center">
-      <p className="text-[11px] font-semibold text-[#86868b] mb-4 uppercase tracking-[0.06em]">{label}</p>
+      <p className="text-[11px] font-semibold text-slate-400 mb-4 uppercase tracking-[0.06em]">{label}</p>
       <div className="flex flex-col items-center gap-[5px]">
         {items.map((val, i) => (
           <motion.div key={i} initial={{ scale: 0 }} animate={{ scale: 1 }}
             transition={{ delay: i * 0.1, type: "spring", stiffness: 400 }}
-            className="w-24 h-10 rounded-lg border-2 flex items-center justify-center font-semibold text-[14px] relative"
-            style={{ borderColor: color, color, background: `${color}06` }}>
+            className="w-24 h-10 rounded-lg border-2 flex items-center justify-center font-semibold text-[14px] relative border-slate-200 text-slate-700 bg-white shadow-sm">
             {val}
-            {i === 0 && <span className="absolute -right-14 text-[11px] font-bold text-[#ff3b30]">← top</span>}
+            {i === 0 && <span className="absolute -right-14 text-[11px] font-bold text-blue-500">← top</span>}
           </motion.div>
         ))}
-        <div className="w-28 h-[3px] rounded-full mt-1 opacity-40" style={{ background: color }} />
+        <div className="w-28 h-[3px] rounded-full mt-1 bg-slate-300" />
       </div>
     </div>
   );
@@ -189,20 +187,20 @@ export function QueueVisual({ items, label, color = "#5856d6", highlightLast = f
 }) {
   return (
     <div className="flex flex-col items-center">
-      <p className="text-[11px] font-semibold text-[#86868b] mb-4 uppercase tracking-[0.06em]">{label}</p>
+      <p className="text-[11px] font-semibold text-slate-400 mb-4 uppercase tracking-[0.06em]">{label}</p>
       <div className="flex items-end gap-[5px]">
         {items.map((val, i) => {
           const hl = highlightLast && i === items.length - 1;
-          const c = hl ? "#ff3b30" : color;
+          const borderC = hl ? "border-red-400" : "border-slate-200";
+          const textC = hl ? "text-red-500" : "text-slate-700";
           return (
             <div key={i} className="flex flex-col items-center">
-              {i === 0 && <span className="text-[10px] font-bold text-[#34c759] mb-2">front↓</span>}
-              {i === items.length - 1 && <span className="text-[10px] font-bold text-[#ff3b30] mb-2">rear↓</span>}
+              {i === 0 && <span className="text-[10px] font-bold text-blue-500 mb-2">front↓</span>}
+              {i === items.length - 1 && <span className="text-[10px] font-bold text-slate-400 mb-2">rear↓</span>}
               {i !== 0 && i !== items.length - 1 && <span className="mb-2 h-[14px]" />}
               <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}
                 transition={{ delay: i * 0.08, type: "spring", stiffness: 400 }}
-                className="w-14 h-12 rounded-lg border-2 flex items-center justify-center font-semibold text-[14px]"
-                style={{ borderColor: c, color: c, background: `${c}06` }}>
+                className={cn("w-14 h-12 rounded-lg border-2 flex items-center justify-center font-semibold text-[14px] bg-white shadow-sm", borderC, textC)}>
                 {val}
               </motion.div>
             </div>
@@ -216,9 +214,11 @@ export function QueueVisual({ items, label, color = "#5856d6", highlightLast = f
 // ===== BADGE =====
 export function Badge({ children, variant = "warning" }: { children: React.ReactNode; variant?: "warning" | "critical" | "success" }) {
   const s = {
-    warning: "bg-[#fffbeb] shadow-[inset_0_0_0_1px_rgba(255,149,0,0.2)] text-[#cc7700]",
-    critical: "bg-[#fff5f5] shadow-[inset_0_0_0_1px_rgba(255,59,48,0.2)] text-[#ff3b30]",
-    success: "bg-[#f0fdf4] shadow-[inset_0_0_0_1px_rgba(52,199,89,0.2)] text-[#248a3d]",
+    warning: "bg-orange-50 border border-orange-200 text-orange-700",
+    critical: "bg-red-50 border border-red-200 text-red-600",
+    success: "bg-green-50 border border-green-200 text-green-700",
   };
-  return <div role="alert" className={cn("inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-semibold", s[variant])}>{children}</div>;
+  return <div role="alert" className={cn("inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-medium shadow-sm", s[variant])}>{children}</div>;
+}
+ldren}</div>;
 }

@@ -12,7 +12,7 @@ interface CodeBlockProps {
   accentColor?: string;
 }
 
-export function CodeBlock({ tabs, code, title, accentColor = "#0071e3" }: CodeBlockProps) {
+export function CodeBlock({ tabs, code, title, accentColor = "#2563eb" }: CodeBlockProps) {
   const [activeTab, setActiveTab] = useState(0);
   const [copied, setCopied] = useState(false);
   const currentCode = tabs ? tabs[activeTab]?.code : code;
@@ -26,7 +26,7 @@ export function CodeBlock({ tabs, code, title, accentColor = "#0071e3" }: CodeBl
   };
 
   return (
-    <div className="rounded-2xl overflow-hidden bg-[#1d1d1f] shadow-[0_2px_12px_rgba(0,0,0,0.12),0_0_0_1px_rgba(0,0,0,0.08)]" role="region" aria-label={title ? `Code: ${title}` : "Code block"}>
+    <div className="rounded-[20px] overflow-hidden bg-[#1d1d1f] shadow-[0_2px_12px_rgba(0,0,0,0.12),0_0_0_1px_rgba(0,0,0,0.08)]" role="region" aria-label={title ? `Code: ${title}` : "Code block"}>
       {/* Tabs */}
       {tabs && tabs.length > 1 && (
         <div className="flex items-center gap-0 px-2 pt-2 bg-[#161618] border-b border-[#2c2c2e] overflow-x-auto code-scrollbar" role="tablist" aria-label="Code examples">
@@ -60,11 +60,11 @@ export function CodeBlock({ tabs, code, title, accentColor = "#0071e3" }: CodeBl
 
         {tabs ? tabs.map((tab, i) => (
           <div key={i} hidden={i !== activeTab} className="overflow-x-auto code-scrollbar p-5 pt-6">
-            <pre className="font-[family-name:var(--font-jetbrains)] text-[13px] leading-[1.85] text-[#e5e5ea] whitespace-pre selection:bg-[#0071e3]/30">{tab.code}</pre>
+            <pre className="font-[family-name:var(--font-jetbrains)] text-[13px] leading-[1.85] text-[#e5e5ea] whitespace-pre selection:bg-[#2563eb]/30">{tab.code}</pre>
           </div>
         )) : (
           <div className="overflow-x-auto code-scrollbar p-5 pt-6">
-            <pre className="font-[family-name:var(--font-jetbrains)] text-[13px] leading-[1.85] text-[#e5e5ea] whitespace-pre selection:bg-[#0071e3]/30">{currentCode}</pre>
+            <pre className="font-[family-name:var(--font-jetbrains)] text-[13px] leading-[1.85] text-[#e5e5ea] whitespace-pre selection:bg-[#2563eb]/30">{currentCode}</pre>
           </div>
         )}
       </div>
