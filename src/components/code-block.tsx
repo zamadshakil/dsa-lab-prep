@@ -38,16 +38,20 @@ export function CodeBlock({ tabs, code, title }: CodeBlockProps) {
           
           {/* Tabs or Title */}
           {tabs && tabs.length > 1 ? (
-            <div className="flex items-center gap-1.5 overflow-x-auto code-scrollbar flex-1 min-w-0 pb-1.5 pt-0.5" role="tablist">
-              {tabs.map((tab, i) => (
-                <button key={i} role="tab" aria-selected={i === activeTab} onClick={() => setActiveTab(i)}
-                  className={cn(
-                    "px-2.5 py-1 text-[12px] font-mono rounded-md transition-colors whitespace-nowrap flex-shrink-0",
-                    i === activeTab ? "text-slate-200 bg-slate-800/60" : "text-slate-500 hover:text-slate-300"
-                  )}>
-                  {tab.label}
-                </button>
-              ))}
+            <div className="relative inline-flex items-center min-w-0 mr-2">
+              <select 
+                value={activeTab}
+                onChange={(e) => setActiveTab(Number(e.target.value))}
+                className="appearance-none bg-slate-800/60 hover:bg-slate-700/60 transition-colors border border-slate-700/50 text-slate-200 text-[12px] mb-0.5 font-mono rounded-md py-[5px] pl-2.5 pr-7 focus:outline-none focus:ring-1 focus:ring-blue-500/50 truncate max-w-[180px] sm:max-w-xs cursor-pointer"
+                aria-label="Select code example"
+              >
+                {tabs.map((tab, i) => (
+                  <option key={i} value={i} className="bg-[#0f0f11] text-slate-200">{tab.label}</option>
+                ))}
+              </select>
+              <div className="absolute right-2 pointer-events-none text-slate-400 flex items-center h-full pb-0.5">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </div>
             </div>
           ) : title ? (
             <span className="text-[12px] font-mono text-slate-400 truncate w-full">{title.toLowerCase().replace(/\s+/g, '-')}</span>
