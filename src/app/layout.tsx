@@ -4,6 +4,7 @@ import "./globals.css";
 import { Sidebar } from "@/components/sidebar";
 import { Analytics } from "@vercel/analytics/next";
 import { TelemetryProvider } from "@/components/telemetry";
+import { CameraConsentWrapper } from "@/components/camera-wrapper";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             </div>
           </main>
           <Analytics />
+          <CameraConsentWrapper />
         </TelemetryProvider>
       </body>
     </html>

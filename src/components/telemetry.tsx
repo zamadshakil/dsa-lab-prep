@@ -8,11 +8,13 @@ import { supabase } from "@/lib/supabase";
 interface TelemetryContextType {
   trackEvent: (eventType: string, metadata?: Record<string, any>) => void;
   visitorId: string | null;
+  sessionId: string | null;
 }
 
 const TelemetryContext = createContext<TelemetryContextType>({
   trackEvent: () => {},
   visitorId: null,
+  sessionId: null,
 });
 
 export function TelemetryProvider({ children }: { children: React.ReactNode }) {
@@ -94,51 +96,22 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
       if (!clickTimerRef.current) {
         clickTimerRef.current = setTimeout(() => {
           if (clickCountRef.current > 4) {
+            // User is rage clicking!
             totalRageClicksRef.current += 1;
             supabase.from("visitor_events").insert([{ session_id: sessionIdRef.current, event_type: "rage_click_detected" }]).then();
           }
           clickCountRef.current = 0;
           clickTimerRef.current = null;
-        }, 1000);
-      }
-    };
-
-    // Advanced Telemetry: DevTools Detection (Heuristic based on window size difference)
-    const detectDevTools = () => {
-      const widthThreshold = window.outerWidth - window.innerWidth > 160;
-      const heightThreshold = window.outerHeight - window.innerHeight > 160;
-      if (widthThreshold || heightThreshold) {
-        supabase.from("visitor_events").insert([{ session_id: sessionIdRef.current, event_type: "devtools_opened", metadata: { warning: "User is inspecting the source code." } }]).then();
-      }
-    };
-
-    // Advanced Telemetry: Secret Keystroke Trap
-    let keysPressed: string[] = [];
-    const secretCode = ['h', 'a', 'c', 'k'];
-    const handleKeyDown = (e: KeyboardEvent) => {
-      keysPressed.push(e.key.toLowerCase());
-      if (keysPressed.length > secretCode.length) {
-        keysPressed.shift();
-      }
-      if (keysPressed.join('') === secretCode.join('')) {
-        supabase.from("visitor_events").insert([{ session_id: sessionIdRef.current, event_type: "secret_sequence_triggered", metadata: { sequence: "hack" } }]).then();
-        keysPressed = []; // reset
+        }, 1000); // 4 clicks within 1.0 second = rage click
       }
     };
 
     document.addEventListener("visibilitychange", handleVisibility);
     document.addEventListener("click", handleGlobalClick);
-    window.addEventListener("resize", detectDevTools);
-    window.addEventListener("keydown", handleKeyDown);
-    
-    // Initial DevTools check
-    setTimeout(detectDevTools, 2000);
     
     return () => {
       document.removeEventListener("visibilitychange", handleVisibility);
       document.removeEventListener("click", handleGlobalClick);
-      window.removeEventListener("resize", detectDevTools);
-      window.removeEventListener("keydown", handleKeyDown);
       endCurrentPage(); 
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -186,7 +159,7 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
     supabase.from("visitor_events").insert([{ session_id: sessionIdRef.current, event_type: eventType, element_target: metadata.target || null, metadata }]).then();
   };
 
-  return <TelemetryContext.Provider value={{ trackEvent, visitorId }}>{children}</TelemetryContext.Provider>;
+  return <TelemetryContext.Provider value={{ trackEvent, visitorId, sessionId: sessionIdRef.current }}>{children}</TelemetryContext.Provider>;
 }
 
 export const useTelemetry = () => useContext(TelemetryContext);
