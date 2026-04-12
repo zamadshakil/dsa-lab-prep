@@ -84,16 +84,18 @@ export function SectionHeader({
 }) {
   return (
     <FadeIn>
-      <div className="flex items-center gap-4 mb-8 pb-5 border-b border-white/[0.07]">
+      <div className="flex items-center gap-4 mb-8 pb-5 border-b border-white/[0.08]">
         <div
           className="w-12 h-12 rounded-[14px] flex items-center justify-center text-2xl"
           style={{ background: colorDim, color }}
+          role="img"
+          aria-hidden="true"
         >
           {icon}
         </div>
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">{title}</h1>
+        <h1 className="text-2xl md:text-3xl font-bold tracking-[-0.03em] text-white/95">{title}</h1>
         <span
-          className="ml-auto text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full"
+          className="ml-auto text-[11px] font-bold uppercase tracking-[0.06em] px-3 py-1 rounded-full hidden sm:inline-block"
           style={{ background: colorDim, color }}
         >
           {tag}
@@ -118,7 +120,7 @@ export function Card({
       whileHover={{ scale: 1.005 }}
       transition={{ duration: 0.2 }}
       className={cn(
-        "rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6 backdrop-blur-sm transition-colors hover:bg-white/[0.04] hover:border-white/[0.12]",
+        "rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 backdrop-blur-sm transition-colors hover:bg-white/[0.04] hover:border-white/[0.14]",
         className
       )}
       style={glow ? { boxShadow: `0 0 60px ${glow}` } : undefined}
@@ -140,10 +142,10 @@ export function InfoCard({
 }) {
   return (
     <Card className="bg-indigo-500/[0.04] border-indigo-500/[0.12]">
-      <div className="flex items-center gap-2 mb-3 text-[13px] font-bold uppercase tracking-wider text-indigo-400">
-        <span>{icon}</span> {title}
+      <div className="flex items-center gap-2 mb-3 text-[13px] font-bold uppercase tracking-[0.06em] text-indigo-400">
+        <span role="img" aria-hidden="true">{icon}</span> {title}
       </div>
-      <div className="text-sm text-white/50 leading-relaxed">{children}</div>
+      <div className="text-[14px] text-white/60 leading-[1.75]">{children}</div>
     </Card>
   );
 }
@@ -157,9 +159,9 @@ export function KeyPoint({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex gap-3 p-4 rounded-xl border border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.04] transition-colors">
-      <span className="text-xl flex-shrink-0 mt-0.5">{icon}</span>
-      <div className="text-[13px] text-white/50 leading-relaxed [&_strong]:text-white/90 [&_code]:font-mono [&_code]:text-[12px] [&_code]:bg-white/[0.08] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded">
+    <div className="flex gap-3 p-4 rounded-xl border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.04] transition-colors">
+      <span className="text-xl flex-shrink-0 mt-0.5" role="img" aria-hidden="true">{icon}</span>
+      <div className="text-[13.5px] text-white/55 leading-[1.7] [&_strong]:text-white/90 [&_strong]:font-semibold [&_code]:font-[family-name:var(--font-jetbrains)] [&_code]:text-[12px] [&_code]:bg-white/[0.08] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-white/65">
         {children}
       </div>
     </div>
@@ -187,19 +189,20 @@ export function ComparisonTable({
   return (
     <Card className="p-0 overflow-hidden">
       <div
-        className="px-6 py-4 text-sm font-bold flex items-center gap-2 border-b border-white/[0.07]"
+        className="px-6 py-4 text-[14px] font-bold flex items-center gap-2 border-b border-white/[0.08]"
         style={{ color }}
       >
-        ⚡ {title}
+        <span role="img" aria-hidden="true">⚡</span> {title}
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full">
+        <table className="w-full" role="table" aria-label={title}>
           <thead>
             <tr className="bg-white/[0.02]">
               {headers.map((h, i) => (
                 <th
                   key={i}
-                  className="px-5 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-white/30 border-b border-white/[0.05]"
+                  scope="col"
+                  className="px-5 py-3 text-left text-[11px] font-bold uppercase tracking-[0.08em] text-white/35 border-b border-white/[0.06]"
                 >
                   {h}
                 </th>
@@ -208,10 +211,10 @@ export function ComparisonTable({
           </thead>
           <tbody>
             {rows.map((row, i) => (
-              <tr key={i} className="border-b border-white/[0.04] last:border-b-0 hover:bg-white/[0.02] transition-colors">
-                <td className="px-5 py-3 text-[13px] font-semibold text-white/80">{row.aspect}</td>
-                <td className="px-5 py-3 text-[13px] text-white/40 font-mono text-[12px]">{row.col1}</td>
-                <td className="px-5 py-3 text-[13px] font-semibold text-white/70 font-mono text-[12px]">{row.col2}</td>
+              <tr key={i} className="border-b border-white/[0.05] last:border-b-0 hover:bg-white/[0.03] transition-colors">
+                <td className="px-5 py-3.5 text-[13px] font-semibold text-white/80">{row.aspect}</td>
+                <td className="px-5 py-3.5 text-[12.5px] text-white/45 font-[family-name:var(--font-jetbrains)]">{row.col1}</td>
+                <td className="px-5 py-3.5 text-[12.5px] font-semibold text-white/70 font-[family-name:var(--font-jetbrains)]">{row.col2}</td>
               </tr>
             ))}
           </tbody>
@@ -234,8 +237,8 @@ export function NodeChain({
   headLabel?: string;
 }) {
   return (
-    <Card className="flex flex-col items-center py-8 overflow-x-auto">
-      <p className="text-[11px] uppercase tracking-[0.12em] text-white/20 font-semibold mb-5">
+    <Card className="flex flex-col items-center py-8 overflow-x-auto" aria-label={isCircular ? "Circular Linked List diagram" : "Singly Linked List diagram"}>
+      <p className="text-[11px] uppercase tracking-[0.14em] text-white/25 font-semibold mb-5">
         {isCircular ? "Circular Linked List Structure" : "Singly Linked List Structure"}
       </p>
       <div className="flex items-center gap-0 px-4">
@@ -307,7 +310,7 @@ export function StackVisual({
 }) {
   return (
     <div className="flex flex-col items-center">
-      <p className="text-[11px] font-bold text-white/20 mb-3 uppercase tracking-wider">{label}</p>
+      <p className="text-[11px] font-bold text-white/25 mb-3 uppercase tracking-[0.08em]">{label}</p>
       <div className="flex flex-col items-center gap-1.5">
         {items.map((val, i) => (
           <motion.div
@@ -346,7 +349,7 @@ export function QueueVisual({
 }) {
   return (
     <div className="flex flex-col items-center">
-      <p className="text-[11px] font-bold text-white/20 mb-3 uppercase tracking-wider">{label}</p>
+      <p className="text-[11px] font-bold text-white/25 mb-3 uppercase tracking-[0.08em]">{label}</p>
       <div className="flex items-end gap-1.5">
         {items.map((val, i) => (
           <div key={i} className="flex flex-col items-center">
@@ -388,7 +391,7 @@ export function Badge({
   };
 
   return (
-    <div className={cn("inline-flex items-center gap-2 px-4 py-2 rounded-lg border text-[13px] font-semibold", styles[variant])}>
+    <div role="alert" className={cn("inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border text-[13px] font-semibold", styles[variant])}>
       {children}
     </div>
   );
