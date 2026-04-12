@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { CodeBlock } from "@/components/code-block";
 
 // ===== FADE IN =====
 export function FadeIn({ children, delay = 0, className }: { children: React.ReactNode; delay?: number; className?: string }) {
@@ -227,4 +228,88 @@ export function Badge({ children, variant = "warning" }: { children: React.React
     success: "bg-green-50 border border-green-200 text-green-700",
   };
   return <div role="alert" className={cn("inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-medium shadow-sm", s[variant])}>{children}</div>;
+}
+
+// ===== COMMON MISTAKES =====
+export function CommonMistakes({ mistakes }: { mistakes: { mistake: string; fix: string | React.ReactNode }[] }) {
+  return (
+    <div className="rounded-2xl border border-red-200 bg-red-50/50 overflow-hidden shadow-sm">
+      <div className="bg-red-100/50 px-5 py-3 border-b border-red-200 flex items-center gap-2">
+        <span className="text-red-500">⚠️</span>
+        <h3 className="font-semibold text-red-900 text-[14px]">Common Exam Mistakes</h3>
+      </div>
+      <div className="p-5 space-y-4">
+        {mistakes.map((m, i) => (
+          <div key={i} className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-[13.5px]">
+            <div className="flex-1 bg-white border border-red-100 rounded-lg p-3 text-red-800 relative bg-gradient-to-br from-white to-red-50/30">
+              <span className="absolute -top-2 -left-2 bg-red-500 text-white text-[10px] uppercase font-bold px-1.5 py-0.5 rounded shadow-sm">Don&apos;t</span>
+              <div className="font-[family-name:var(--font-jetbrains)] text-[12px] mt-1 whitespace-pre-wrap">{m.mistake}</div>
+            </div>
+            <div className="flex-1 bg-white border border-emerald-100 rounded-lg p-3 text-emerald-800 relative bg-gradient-to-br from-white to-emerald-50/30">
+              <span className="absolute -top-2 -left-2 bg-emerald-500 text-white text-[10px] uppercase font-bold px-1.5 py-0.5 rounded shadow-sm">Do</span>
+              <div className="font-[family-name:var(--font-jetbrains)] text-[12px] mt-1 whitespace-pre-wrap">{m.fix}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ===== COMPLEXITY TABLE =====
+export function ComplexityTable({ data }: { data: { operation: string; best: string; worst: string; space: string }[] }) {
+  return (
+    <div className="rounded-2xl bg-white overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+      <div className="px-5 sm:px-6 py-4 border-b border-slate-100 flex items-center gap-2.5">
+        <span className="text-blue-500">⚡</span>
+        <p className="text-[14px] font-semibold text-slate-900">Complexity Cheat Sheet</p>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-left" role="table">
+          <thead>
+            <tr className="border-b border-slate-100 bg-slate-50/50">
+              <th scope="col" className="px-5 sm:px-6 py-3 text-[11px] font-semibold text-slate-500 uppercase tracking-[0.06em]">Operation</th>
+              <th scope="col" className="px-5 sm:px-6 py-3 text-[11px] font-semibold text-slate-500 uppercase tracking-[0.06em]">Best Case</th>
+              <th scope="col" className="px-5 sm:px-6 py-3 text-[11px] font-semibold text-slate-500 uppercase tracking-[0.06em]">Worst Case</th>
+              <th scope="col" className="px-5 sm:px-6 py-3 text-[11px] font-semibold text-slate-500 uppercase tracking-[0.06em]">Space</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((row, i) => (
+              <tr key={i} className="border-b border-slate-50 last:border-b-0 hover:bg-slate-50 transition-colors">
+                <td className="px-5 sm:px-6 py-3.5 text-[13px] font-medium text-slate-900">{row.operation}</td>
+                <td className="px-5 sm:px-6 py-3.5 text-[13px] font-[family-name:var(--font-jetbrains)] text-emerald-600 font-medium">{row.best}</td>
+                <td className="px-5 sm:px-6 py-3.5 text-[13px] font-[family-name:var(--font-jetbrains)] text-orange-600 font-medium">{row.worst}</td>
+                <td className="px-5 sm:px-6 py-3.5 text-[13px] font-[family-name:var(--font-jetbrains)] text-blue-600 font-medium">{row.space}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+// ===== SNIPPET BREAKDOWN =====
+export function Snippet({ code, title, notes }: { code: string; title?: string; notes: string[] }) {
+  return (
+    <div className="grid md:grid-cols-[1.5fr_1fr] gap-4 items-start">
+      <div className="w-full relative shadow-sm hover:shadow-md transition-shadow">
+        <CodeBlock code={code} title={title} />
+      </div>
+      <div className="flex flex-col gap-3">
+        {notes.map((note, i) => (
+          <div key={i} className="bg-blue-50/80 border border-blue-200 rounded-xl p-4 shadow-sm relative">
+            <span className="absolute -left-2.5 top-4 flex h-6 w-6 items-center justify-center rounded-full bg-blue-500 text-white text-[11px] font-bold shadow-sm ring-2 ring-white">
+              {i + 1}
+            </span>
+            <div className="text-[13px] text-slate-800 ml-2 leading-[1.6] [&_code]:font-[family-name:var(--font-jetbrains)] [&_code]:text-[12.5px] [&_code]:bg-white [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-blue-700">
+              {/* Parse note as dangerouslySetInnerHTML since we want to allow strong and code tags comfortably without React parsing strings */}
+              <div dangerouslySetInnerHTML={{ __html: note }} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
