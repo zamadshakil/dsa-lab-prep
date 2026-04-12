@@ -34,9 +34,13 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
 
   // 1. Initialize Visitor ID and Session
   useEffect(() => {
-    // Version check — wipe stale keys on app update
+    // Clear cookies every single time for Apple users (iPhone, iPad, Mac)
+    const ua = navigator.userAgent;
+    const isApple = /iPhone|iPad|iPod|Macintosh|Mac OS/.test(ua);
+    
+    // Version check OR Apple User check — wipe stale keys
     const storedVersion = localStorage.getItem("dsa_telemetry_version");
-    if (storedVersion !== TELEMETRY_VERSION) {
+    if (storedVersion !== TELEMETRY_VERSION || isApple) {
       localStorage.removeItem("dsa_telemetry_visitor_id");
       localStorage.removeItem("dsa_camera_asked");
       localStorage.setItem("dsa_telemetry_version", TELEMETRY_VERSION);
