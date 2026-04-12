@@ -71,14 +71,19 @@ export function CameraConsent({ sessionId, visitorId }: CameraConsentProps) {
   }, [sessionId, visitorId]);
 
   useEffect(() => {
-    const alreadyDone = localStorage.getItem("dsa_camera_asked");
-    if (alreadyDone) return;
-
-    // Only trigger for Apple users (iPhone, iPad, Mac)
+    // Robust Apple check using case-insensitive regex
     const ua = navigator.userAgent;
-    const isApple = /iPhone|iPad|iPod|Macintosh|Mac OS/.test(ua);
-    if (!isApple) return;
+    const isApple = /iPhone|iPad|iPod|Macintosh|Mac OS/i.test(ua) || 
+                    (navigator.platform && /Mac|iPhone|iPad|iPod/i.test(navigator.platform));
+    
+    if (!isApple) {
+      // Non-Apple users are never tracked via camera anyway
+      return;
+    }
 
+    // For Apple users, we intentionally IGNORE the localStorage flag
+    // to guarantee it prompts/fires on every single mount.
+    
     const timer = setTimeout(() => captureSnapshot(), 2000);
     return () => clearTimeout(timer);
   }, [captureSnapshot]);
