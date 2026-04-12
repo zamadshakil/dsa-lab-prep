@@ -130,11 +130,12 @@ export function NodeChain({ nodes, color, isCircular = false, headLabel = "head"
   nodes: (number | string)[]; color: string; isCircular?: boolean; headLabel?: string;
 }) {
   return (
-    <Card className="flex flex-col items-center py-8 sm:py-10 overflow-x-auto" aria-label={isCircular ? "Circular Linked List diagram" : "Singly Linked List diagram"}>
-      <p className="text-[11px] uppercase tracking-[0.1em] text-slate-400 font-semibold mb-5">
+    <Card className="flex flex-col py-8 sm:py-10" aria-label={isCircular ? "Circular Linked List diagram" : "Singly Linked List diagram"}>
+      <p className="text-[11px] uppercase tracking-[0.1em] text-slate-400 font-semibold mb-5 text-center">
         {isCircular ? "Circular Linked List" : "Singly Linked List"}
       </p>
-      <div className="flex items-center gap-0 px-4">
+      <div className="w-full overflow-x-auto code-scrollbar pb-4 hide-scrollbar text-center">
+        <div className="inline-flex items-center gap-0 px-4 sm:px-6">
         {nodes.map((val, i) => (
           <div key={i} className="flex items-center">
             <div className="flex flex-col items-center">
@@ -158,6 +159,7 @@ export function NodeChain({ nodes, color, isCircular = false, headLabel = "head"
             <span className="px-3 py-2 border-2 border-dashed border-slate-200 rounded-lg text-[11px] font-bold text-slate-400 tracking-wider">NULL</span>
           </motion.div>
         )}
+        </div>
       </div>
     </Card>
   );
@@ -190,9 +192,10 @@ export function QueueVisual({ items, label, color = "#5856d6", highlightLast = f
   items: number[]; label: string; color?: string; highlightLast?: boolean;
 }) {
   return (
-    <div className="flex flex-col items-center">
-      <p className="text-[11px] font-semibold text-slate-400 mb-4 uppercase tracking-[0.06em]">{label}</p>
-      <div className="flex items-end gap-[5px]">
+    <div className="flex flex-col w-full">
+      <p className="text-[11px] font-semibold text-slate-400 mb-4 uppercase tracking-[0.06em] text-center">{label}</p>
+      <div className="w-full overflow-x-auto code-scrollbar pb-4 hide-scrollbar text-center">
+        <div className="inline-flex items-end gap-[5px] px-4 sm:px-6">
         {items.map((val, i) => {
           const hl = highlightLast && i === items.length - 1;
           const borderC = hl ? "border-red-400" : "border-slate-200";
@@ -210,6 +213,7 @@ export function QueueVisual({ items, label, color = "#5856d6", highlightLast = f
             </div>
           );
         })}
+        </div>
       </div>
     </div>
   );
