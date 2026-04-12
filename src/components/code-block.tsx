@@ -12,7 +12,7 @@ interface CodeBlockProps {
   accentColor?: string;
 }
 
-export function CodeBlock({ tabs, code, title, accentColor = "#4263eb" }: CodeBlockProps) {
+export function CodeBlock({ tabs, code, title, accentColor = "#0071e3" }: CodeBlockProps) {
   const [activeTab, setActiveTab] = useState(0);
   const [copied, setCopied] = useState(false);
   const currentCode = tabs ? tabs[activeTab]?.code : code;
@@ -26,15 +26,15 @@ export function CodeBlock({ tabs, code, title, accentColor = "#4263eb" }: CodeBl
   };
 
   return (
-    <div className="rounded-xl border border-[#e9ecef] overflow-hidden bg-[#1a1a2e]" role="region" aria-label={title ? `Code: ${title}` : "Code block"}>
+    <div className="rounded-2xl overflow-hidden bg-[#1d1d1f] shadow-[0_2px_12px_rgba(0,0,0,0.12),0_0_0_1px_rgba(0,0,0,0.08)]" role="region" aria-label={title ? `Code: ${title}` : "Code block"}>
       {/* Tabs */}
       {tabs && tabs.length > 1 && (
-        <div className="flex items-center gap-0 px-2 pt-2 bg-[#141428] border-b border-[#2d2d50] overflow-x-auto code-scrollbar" role="tablist" aria-label="Code examples">
+        <div className="flex items-center gap-0 px-2 pt-2 bg-[#161618] border-b border-[#2c2c2e] overflow-x-auto code-scrollbar" role="tablist" aria-label="Code examples">
           {tabs.map((tab, i) => (
             <button key={i} role="tab" aria-selected={i === activeTab} onClick={() => setActiveTab(i)}
               className={cn(
-                "px-3.5 py-2 text-[13px] font-medium rounded-t-lg transition-all duration-150 whitespace-nowrap mx-0.5",
-                i === activeTab ? "text-white bg-[#1a1a2e]" : "text-[#6c6c8a] hover:text-[#9999b5]"
+                "px-3.5 py-2 text-[13px] font-medium rounded-lg transition-all duration-150 whitespace-nowrap mx-0.5",
+                i === activeTab ? "text-[#f5f5f7] bg-[#2c2c2e]" : "text-[#6e6e73] hover:text-[#aeaeb2]"
               )}>
               {tab.label}
             </button>
@@ -43,8 +43,8 @@ export function CodeBlock({ tabs, code, title, accentColor = "#4263eb" }: CodeBl
       )}
 
       {!tabs && title && (
-        <div className="px-5 py-3 bg-[#141428] border-b border-[#2d2d50]">
-          <span className="text-[12px] font-medium text-[#6c6c8a] uppercase tracking-[0.05em]">{title}</span>
+        <div className="px-5 py-3 bg-[#161618] border-b border-[#2c2c2e]">
+          <span className="text-[12px] font-medium text-[#6e6e73] uppercase tracking-[0.05em]">{title}</span>
         </div>
       )}
 
@@ -52,7 +52,7 @@ export function CodeBlock({ tabs, code, title, accentColor = "#4263eb" }: CodeBl
         <button onClick={handleCopy} aria-label={copied ? "Copied" : "Copy code"}
           className={cn(
             "absolute top-3 right-3 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium transition-all duration-150",
-            copied ? "text-[#51cf66] bg-[#51cf66]/10" : "text-[#6c6c8a] bg-[#2d2d50] hover:text-[#9999b5]"
+            copied ? "text-[#34c759] bg-[#34c759]/10" : "text-[#6e6e73] bg-[#2c2c2e] hover:text-[#aeaeb2]"
           )}>
           {copied ? <Check size={13} /> : <Copy size={13} />}
           {copied ? "Copied" : "Copy"}
@@ -60,11 +60,11 @@ export function CodeBlock({ tabs, code, title, accentColor = "#4263eb" }: CodeBl
 
         {tabs ? tabs.map((tab, i) => (
           <div key={i} hidden={i !== activeTab} className="overflow-x-auto code-scrollbar p-5 pt-6">
-            <pre className="font-[family-name:var(--font-jetbrains)] text-[13px] leading-[1.85] text-[#e0e0f0] whitespace-pre selection:bg-[#4263eb]/30">{tab.code}</pre>
+            <pre className="font-[family-name:var(--font-jetbrains)] text-[13px] leading-[1.85] text-[#e5e5ea] whitespace-pre selection:bg-[#0071e3]/30">{tab.code}</pre>
           </div>
         )) : (
           <div className="overflow-x-auto code-scrollbar p-5 pt-6">
-            <pre className="font-[family-name:var(--font-jetbrains)] text-[13px] leading-[1.85] text-[#e0e0f0] whitespace-pre selection:bg-[#4263eb]/30">{currentCode}</pre>
+            <pre className="font-[family-name:var(--font-jetbrains)] text-[13px] leading-[1.85] text-[#e5e5ea] whitespace-pre selection:bg-[#0071e3]/30">{currentCode}</pre>
           </div>
         )}
       </div>

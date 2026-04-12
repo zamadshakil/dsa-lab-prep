@@ -16,7 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#f5f5f7",
   width: "device-width",
   initialScale: 1,
 };
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}>
-      <body className="min-h-screen bg-white text-[#1a1a2e] font-[family-name:var(--font-inter)]">
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[999] focus:px-4 focus:py-2 focus:bg-[#4263eb] focus:text-white focus:rounded-lg focus:text-sm focus:font-medium">
+      <body className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] font-[family-name:var(--font-inter)]">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[999] focus:px-4 focus:py-2 focus:bg-[#0071e3] focus:text-white focus:rounded-lg focus:text-sm focus:font-medium">
           Skip to content
         </a>
         <Sidebar />

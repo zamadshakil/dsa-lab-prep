@@ -41,8 +41,8 @@ export function SectionHeader({ icon, title, tag, color, colorDim }: {
   return (
     <FadeIn>
       <div className="mb-8">
-        <p className="text-[13px] font-semibold uppercase tracking-[0.06em] mb-2" style={{ color }}>{tag}</p>
-        <h1 className="text-[28px] sm:text-[36px] font-bold tracking-[-0.035em] leading-[1.15] text-[#1a1a2e]">{title}</h1>
+        <p className="text-[12px] font-semibold uppercase tracking-[0.08em] mb-2.5" style={{ color }}>{tag}</p>
+        <h1 className="text-[28px] sm:text-[36px] font-bold tracking-[-0.035em] leading-[1.12] text-[#1d1d1f]">{title}</h1>
       </div>
     </FadeIn>
   );
@@ -51,7 +51,10 @@ export function SectionHeader({ icon, title, tag, color, colorDim }: {
 // ===== CARD =====
 export function Card({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={cn("rounded-xl border border-[#e9ecef] bg-white p-5 sm:p-6", className)}>
+    <div className={cn(
+      "rounded-2xl bg-white p-5 sm:p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_0_0_1px_rgba(0,0,0,0.03)]",
+      className
+    )}>
       {children}
     </div>
   );
@@ -60,24 +63,24 @@ export function Card({ children, className }: { children: React.ReactNode; class
 // ===== INFO CARD =====
 export function InfoCard({ title, children, icon = "💡" }: { title: string; children: React.ReactNode; icon?: string }) {
   return (
-    <Card className="bg-[#edf2ff] border-[#dbe4ff]">
+    <div className="rounded-2xl bg-[#eef4ff] p-5 sm:p-6 shadow-[0_0_0_1px_rgba(0,113,227,0.08)]">
       <div className="flex items-center gap-2 mb-2.5">
         <span role="img" aria-hidden="true" className="text-sm">{icon}</span>
-        <p className="text-[13px] font-bold text-[#4263eb] uppercase tracking-[0.04em]">{title}</p>
+        <p className="text-[13px] font-bold text-[#0071e3] uppercase tracking-[0.04em]">{title}</p>
       </div>
-      <div className="text-[14px] text-[#495057] leading-[1.7] [&_strong]:text-[#1a1a2e] [&_strong]:font-semibold [&_code]:font-[family-name:var(--font-jetbrains)] [&_code]:text-[12px] [&_code]:bg-[#f1f3f5] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-[#7048e8] [&_p]:mb-1">
+      <div className="text-[14px] text-[#424245] leading-[1.7] [&_strong]:text-[#1d1d1f] [&_strong]:font-semibold [&_code]:font-[family-name:var(--font-jetbrains)] [&_code]:text-[12px] [&_code]:bg-white/70 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-[#5856d6] [&_p]:mb-1">
         {children}
       </div>
-    </Card>
+    </div>
   );
 }
 
 // ===== KEY POINT =====
 export function KeyPoint({ icon, children }: { icon: string; children: React.ReactNode }) {
   return (
-    <div className="flex gap-3 p-4 rounded-xl bg-[#f8f9fa] border border-[#e9ecef] hover:border-[#dee2e6] transition-colors">
+    <div className="flex gap-3 p-4 rounded-xl bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04),0_0_0_1px_rgba(0,0,0,0.03)] hover:shadow-[0_2px_8px_rgba(0,0,0,0.06),0_0_0_1px_rgba(0,0,0,0.04)] transition-shadow duration-200">
       <span className="text-base flex-shrink-0 mt-0.5" role="img" aria-hidden="true">{icon}</span>
-      <div className="text-[14px] text-[#495057] leading-[1.65] [&_strong]:text-[#1a1a2e] [&_strong]:font-semibold [&_code]:font-[family-name:var(--font-jetbrains)] [&_code]:text-[12px] [&_code]:bg-white [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-[#4263eb] [&_code]:border [&_code]:border-[#e9ecef]">
+      <div className="text-[14px] text-[#424245] leading-[1.65] [&_strong]:text-[#1d1d1f] [&_strong]:font-semibold [&_code]:font-[family-name:var(--font-jetbrains)] [&_code]:text-[12px] [&_code]:bg-[#f5f5f7] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-[#0071e3]">
         {children}
       </div>
     </div>
@@ -91,32 +94,32 @@ export function ComparisonTable({ title, color, headers, rows }: {
   title: string; color: string; headers: [string, string, string]; rows: CompRow[];
 }) {
   return (
-    <Card className="p-0 overflow-hidden">
-      <div className="px-5 sm:px-6 py-4 border-b border-[#e9ecef] flex items-center gap-2.5">
-        <div className="w-2 h-2 rounded-full" style={{ background: color }} />
-        <p className="text-[14px] font-semibold text-[#1a1a2e]">{title}</p>
+    <div className="rounded-2xl bg-white overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04),0_0_0_1px_rgba(0,0,0,0.03)]">
+      <div className="px-5 sm:px-6 py-4 border-b border-[#e8e8ed] flex items-center gap-2.5">
+        <div className="w-[7px] h-[7px] rounded-full" style={{ background: color }} />
+        <p className="text-[14px] font-semibold text-[#1d1d1f]">{title}</p>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full" role="table" aria-label={title}>
           <thead>
-            <tr className="border-b border-[#e9ecef] bg-[#f8f9fa]">
+            <tr className="border-b border-[#e8e8ed] bg-[#fafafa]">
               {headers.map((h, i) => (
-                <th key={i} scope="col" className="px-5 sm:px-6 py-2.5 text-left text-[11px] font-semibold text-[#868e96] uppercase tracking-[0.06em]">{h}</th>
+                <th key={i} scope="col" className="px-5 sm:px-6 py-2.5 text-left text-[11px] font-semibold text-[#86868b] uppercase tracking-[0.06em]">{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {rows.map((row, i) => (
-              <tr key={i} className="border-b border-[#f1f3f5] last:border-b-0 hover:bg-[#f8f9fa]/60 transition-colors">
-                <td className="px-5 sm:px-6 py-3 text-[13px] font-medium text-[#1a1a2e]">{row.aspect}</td>
-                <td className="px-5 sm:px-6 py-3 text-[13px] font-[family-name:var(--font-jetbrains)] text-[#868e96]">{row.col1}</td>
-                <td className="px-5 sm:px-6 py-3 text-[13px] font-[family-name:var(--font-jetbrains)] text-[#4263eb] font-medium">{row.col2}</td>
+              <tr key={i} className="border-b border-[#f0f0f5] last:border-b-0 hover:bg-[#fafafa] transition-colors">
+                <td className="px-5 sm:px-6 py-3 text-[13px] font-medium text-[#1d1d1f]">{row.aspect}</td>
+                <td className="px-5 sm:px-6 py-3 text-[13px] font-[family-name:var(--font-jetbrains)] text-[#86868b]">{row.col1}</td>
+                <td className="px-5 sm:px-6 py-3 text-[13px] font-[family-name:var(--font-jetbrains)] text-[#0071e3] font-medium">{row.col2}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-    </Card>
+    </div>
   );
 }
 
@@ -126,32 +129,32 @@ export function NodeChain({ nodes, color, isCircular = false, headLabel = "head"
 }) {
   return (
     <Card className="flex flex-col items-center py-8 sm:py-10 overflow-x-auto" aria-label={isCircular ? "Circular Linked List diagram" : "Singly Linked List diagram"}>
-      <p className="text-[11px] uppercase tracking-[0.1em] text-[#868e96] font-semibold mb-5">
+      <p className="text-[11px] uppercase tracking-[0.1em] text-[#86868b] font-semibold mb-5">
         {isCircular ? "Circular Linked List" : "Singly Linked List"}
       </p>
       <div className="flex items-center gap-0 px-4">
         {nodes.map((val, i) => (
           <div key={i} className="flex items-center">
             <div className="flex flex-col items-center">
-              {i === 0 && <span className="text-[10px] font-bold px-2 py-0.5 rounded-md mb-2" style={{ background: `${color}18`, color }}>{headLabel}</span>}
+              {i === 0 && <span className="text-[10px] font-bold px-2 py-0.5 rounded-md mb-2" style={{ background: `${color}14`, color }}>{headLabel}</span>}
               <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}
                 transition={{ delay: i * 0.08, type: "spring", stiffness: 400, damping: 20 }}
                 className="w-14 h-12 rounded-xl border-2 flex items-center justify-center font-semibold text-[14px]"
-                style={{ borderColor: color, color, background: `${color}08` }}>
+                style={{ borderColor: color, color, background: `${color}06` }}>
                 {val}
               </motion.div>
-              {isCircular && i === nodes.length - 1 && <span className="text-[10px] mt-2 font-bold text-[#e03131]">↻ head</span>}
+              {isCircular && i === nodes.length - 1 && <span className="text-[10px] mt-2 font-bold text-[#ff3b30]">↻ head</span>}
             </div>
             {i < nodes.length - 1 && (
               <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.08 + 0.04 }}
-                className="text-[#ced4da] px-2 text-sm">→</motion.span>
+                className="text-[#c5c5ca] px-2 text-sm">→</motion.span>
             )}
           </div>
         ))}
         {!isCircular && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: nodes.length * 0.08 }} className="flex items-center">
-            <span className="text-[#ced4da] px-2 text-sm">→</span>
-            <span className="px-3 py-2 border-2 border-dashed border-[#dee2e6] rounded-lg text-[11px] font-bold text-[#adb5bd] tracking-wider">NULL</span>
+            <span className="text-[#c5c5ca] px-2 text-sm">→</span>
+            <span className="px-3 py-2 border-2 border-dashed border-[#d2d2d7] rounded-lg text-[11px] font-bold text-[#aeaeb2] tracking-wider">NULL</span>
           </motion.div>
         )}
       </div>
@@ -160,46 +163,46 @@ export function NodeChain({ nodes, color, isCircular = false, headLabel = "head"
 }
 
 // ===== STACK VISUAL =====
-export function StackVisual({ items, label, color = "#f59f00" }: { items: number[]; label: string; color?: string }) {
+export function StackVisual({ items, label, color = "#ff9500" }: { items: number[]; label: string; color?: string }) {
   return (
     <div className="flex flex-col items-center">
-      <p className="text-[11px] font-semibold text-[#868e96] mb-4 uppercase tracking-[0.06em]">{label}</p>
+      <p className="text-[11px] font-semibold text-[#86868b] mb-4 uppercase tracking-[0.06em]">{label}</p>
       <div className="flex flex-col items-center gap-[5px]">
         {items.map((val, i) => (
           <motion.div key={i} initial={{ scale: 0 }} animate={{ scale: 1 }}
             transition={{ delay: i * 0.1, type: "spring", stiffness: 400 }}
             className="w-24 h-10 rounded-lg border-2 flex items-center justify-center font-semibold text-[14px] relative"
-            style={{ borderColor: color, color, background: `${color}08` }}>
+            style={{ borderColor: color, color, background: `${color}06` }}>
             {val}
-            {i === 0 && <span className="absolute -right-14 text-[11px] font-bold text-[#e03131]">← top</span>}
+            {i === 0 && <span className="absolute -right-14 text-[11px] font-bold text-[#ff3b30]">← top</span>}
           </motion.div>
         ))}
-        <div className="w-28 h-[3px] rounded-full mt-1" style={{ background: color, opacity: 0.5 }} />
+        <div className="w-28 h-[3px] rounded-full mt-1 opacity-40" style={{ background: color }} />
       </div>
     </div>
   );
 }
 
 // ===== QUEUE VISUAL =====
-export function QueueVisual({ items, label, color = "#7048e8", highlightLast = false }: {
+export function QueueVisual({ items, label, color = "#5856d6", highlightLast = false }: {
   items: number[]; label: string; color?: string; highlightLast?: boolean;
 }) {
   return (
     <div className="flex flex-col items-center">
-      <p className="text-[11px] font-semibold text-[#868e96] mb-4 uppercase tracking-[0.06em]">{label}</p>
+      <p className="text-[11px] font-semibold text-[#86868b] mb-4 uppercase tracking-[0.06em]">{label}</p>
       <div className="flex items-end gap-[5px]">
         {items.map((val, i) => {
           const hl = highlightLast && i === items.length - 1;
-          const c = hl ? "#e03131" : color;
+          const c = hl ? "#ff3b30" : color;
           return (
             <div key={i} className="flex flex-col items-center">
-              {i === 0 && <span className="text-[10px] font-bold text-[#0ca678] mb-2">front↓</span>}
-              {i === items.length - 1 && <span className="text-[10px] font-bold text-[#e03131] mb-2">rear↓</span>}
+              {i === 0 && <span className="text-[10px] font-bold text-[#34c759] mb-2">front↓</span>}
+              {i === items.length - 1 && <span className="text-[10px] font-bold text-[#ff3b30] mb-2">rear↓</span>}
               {i !== 0 && i !== items.length - 1 && <span className="mb-2 h-[14px]" />}
               <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}
                 transition={{ delay: i * 0.08, type: "spring", stiffness: 400 }}
                 className="w-14 h-12 rounded-lg border-2 flex items-center justify-center font-semibold text-[14px]"
-                style={{ borderColor: c, color: c, background: `${c}08` }}>
+                style={{ borderColor: c, color: c, background: `${c}06` }}>
                 {val}
               </motion.div>
             </div>
@@ -213,9 +216,9 @@ export function QueueVisual({ items, label, color = "#7048e8", highlightLast = f
 // ===== BADGE =====
 export function Badge({ children, variant = "warning" }: { children: React.ReactNode; variant?: "warning" | "critical" | "success" }) {
   const s = {
-    warning: "bg-[#fff9db] border-[#ffe066] text-[#e67700]",
-    critical: "bg-[#fff5f5] border-[#ffc9c9] text-[#e03131]",
-    success: "bg-[#ebfbee] border-[#b2f2bb] text-[#2b8a3e]",
+    warning: "bg-[#fffbeb] shadow-[inset_0_0_0_1px_rgba(255,149,0,0.2)] text-[#cc7700]",
+    critical: "bg-[#fff5f5] shadow-[inset_0_0_0_1px_rgba(255,59,48,0.2)] text-[#ff3b30]",
+    success: "bg-[#f0fdf4] shadow-[inset_0_0_0_1px_rgba(52,199,89,0.2)] text-[#248a3d]",
   };
-  return <div role="alert" className={cn("inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border text-[13px] font-semibold", s[variant])}>{children}</div>;
+  return <div role="alert" className={cn("inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-semibold", s[variant])}>{children}</div>;
 }
