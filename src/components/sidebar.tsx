@@ -141,7 +141,7 @@ function ExamCountdown() {
       const minutes = Math.floor((diff % 3600000) / 60000);
       const seconds = Math.floor((diff % 60000) / 1000);
       
-      setTime(`${hours}h ${minutes}m ${seconds}s left`);
+      setTime(`Exam: ${hours}h ${minutes}m ${seconds}s`);
     };
     tick();
     const id = setInterval(tick, 1000);
@@ -150,7 +150,7 @@ function ExamCountdown() {
 
   if (!mounted) return null;
   return (
-    <div className="flex items-center gap-2 lg:gap-3 bg-red-50/80 border border-red-200/80 rounded-[10px] lg:rounded-[12px] px-2.5 py-1.5 lg:p-3" aria-live="polite">
+    <div className="flex items-center gap-2 lg:gap-3 bg-red-50/80 border border-red-200/80 rounded-[10px] lg:rounded-[12px] px-3 py-1.5 lg:p-3" aria-live="polite">
       <div className="w-[6px] h-[6px] lg:w-[8px] lg:h-[8px] rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)] animate-pulse" />
       <p className="text-[12px] lg:text-[13px] text-red-600 font-bold tracking-tight whitespace-nowrap tabular-nums">{time}</p>
     </div>
