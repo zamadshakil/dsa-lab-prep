@@ -77,13 +77,14 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile Top Header (Branding only) */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 h-[60px] bg-white/80 backdrop-blur-xl border-b border-slate-200/60 z-[140] flex items-center px-4 sm:px-6 shadow-sm">
+      {/* Mobile Top Header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 h-[64px] bg-white/80 backdrop-blur-xl border-b border-slate-200/60 z-[140] flex items-center justify-between px-4 sm:px-6 shadow-sm">
         <Link href="/" className="flex flex-col">
-          <p className="text-[17px] font-bold tracking-tight text-slate-900">
-            DSA Lab Prep
+          <p className="text-[16px] sm:text-[17px] font-bold tracking-tight text-slate-900">
+            DSA Lab
           </p>
         </Link>
+        <ExamCountdown />
       </div>
 
       {/* Desktop sidebar */}
@@ -133,20 +134,25 @@ function ExamCountdown() {
   useEffect(() => {
     setMounted(true);
     const tick = () => {
-      const diff = new Date("2026-04-13T09:00:00+05:00").getTime() - Date.now();
-      if (diff <= 0) { setTime("Exam day — you got this!"); return; }
-      setTime(`${Math.floor(diff / 3600000)}h ${Math.floor((diff % 3600000) / 60000)}m until exam`);
+      const diff = new Date("2026-04-13T08:30:00+05:00").getTime() - Date.now();
+      if (diff <= 0) { setTime("Exam is Live!"); return; }
+      
+      const hours = Math.floor(diff / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+      
+      setTime(`${hours}h ${minutes}m ${seconds}s left`);
     };
     tick();
-    const id = setInterval(tick, 60000);
+    const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, []);
 
   if (!mounted) return null;
   return (
-    <div className="flex items-center gap-3 bg-red-50/50 border border-red-100 rounded-[12px] p-3" aria-live="polite">
-      <div className="w-[8px] h-[8px] rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)] animate-pulse" />
-      <p className="text-[13px] text-red-600 font-medium tracking-tight">{time}</p>
+    <div className="flex items-center gap-2 lg:gap-3 bg-red-50/80 border border-red-200/80 rounded-[10px] lg:rounded-[12px] px-2.5 py-1.5 lg:p-3" aria-live="polite">
+      <div className="w-[6px] h-[6px] lg:w-[8px] lg:h-[8px] rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)] animate-pulse" />
+      <p className="text-[12px] lg:text-[13px] text-red-600 font-bold tracking-tight whitespace-nowrap tabular-nums">{time}</p>
     </div>
   );
 }
