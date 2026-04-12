@@ -8,9 +8,12 @@ import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
+import { useTelemetry } from "@/components/telemetry";
+
 export function Sidebar() {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
+  const { trackEvent } = useTelemetry();
   useEffect(() => setMounted(true), []);
 
   const navItems = [
@@ -42,6 +45,7 @@ export function Sidebar() {
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  onClick={() => trackEvent("sidebar_click", { target: item.label })}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
                     "flex items-center gap-3 px-3 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-200",

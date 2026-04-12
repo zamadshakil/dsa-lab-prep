@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTelemetry } from "@/components/telemetry";
 
 interface CodeBlockProps {
   tabs?: { label: string; code: string }[];
@@ -14,6 +15,7 @@ interface CodeBlockProps {
 export function CodeBlock({ tabs, code, title }: CodeBlockProps) {
   const [activeTab, setActiveTab] = useState(0);
   const [copied, setCopied] = useState(false);
+  const { trackEvent } = useTelemetry();
   const currentCode = tabs ? tabs[activeTab]?.code : code;
 
   const handleCopy = async () => {
@@ -21,6 +23,15 @@ export function CodeBlock({ tabs, code, title }: CodeBlockProps) {
     try { await navigator.clipboard.writeText(currentCode); }
     catch { const t = document.createElement("textarea"); t.value = currentCode; t.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(t); t.select(); document.execCommand("copy"); document.body.removeChild(t); }
     setCopied(true);
+    
+    // Telemetry
+    trackEvent("copy_code", { 
+      title: title || "anonymous snippet",
+      language: tabs ? "tabs" : "single",
+      tab_label: tabs ? tabs[activeTab].label : "n/a",
+      code_length: currentCode.length 
+    });
+
     setTimeout(() => setCopied(false), 2000);
   };
 
