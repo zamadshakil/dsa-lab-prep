@@ -21,6 +21,11 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
   const sessionIdRef = useRef<string>(uuidv4());
   const currentViewIdRef = useRef<string | null>(null);
   const maxScrollRef = useRef<number>(0);
+  
+  // Fun Telemetry: Rage Clicks
+  const clickCountRef = useRef<number>(0);
+  const clickTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const totalRageClicksRef = useRef<number>(0);
 
   // 1. Initialize Visitor ID and Session
   useEffect(() => {
@@ -31,132 +36,128 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
     }
     setVisitorId(vid);
 
-    // Collect maximal hardware/env intel
-    const nav = window.navigator as any;
-    const sessionData = {
-      session_id: sessionIdRef.current,
-      visitor_id: vid,
-      user_agent: navigator.userAgent,
-      browser_info: {
-        vendor: navigator.vendor,
-        language: navigator.language,
-        cookieEnabled: navigator.cookieEnabled,
-        doNotTrack: navigator.doNotTrack,
-        pdfViewerEnabled: navigator.pdfViewerEnabled
-      },
-      os_info: { platform: navigator.platform },
-      screen_resolution: `${window.screen.width}x${window.screen.height}`,
-      window_resolution: `${window.innerWidth}x${window.innerHeight}`,
-      time_zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      locale: navigator.language,
-      device_memory: nav.deviceMemory || null,
-      hardware_concurrency: navigator.hardwareConcurrency || null,
-      network_type: nav.connection ? nav.connection.effectiveType : null,
-      referrer: document.referrer || "direct",
-      current_url: window.location.href,
-    };
+    const initializeSession = async () => {
+      // Fun Telemetry: Battery API
+      const nav: any = window.navigator;
+      let batteryLevel = null;
+      let isCharging = null;
+      try {
+        if (nav.getBattery) {
+          const battery = await nav.getBattery();
+          batteryLevel = Math.round(battery.level * 100);
+          isCharging = battery.charging;
+        }
+      } catch (e) {}
 
-    // Fire & Forget insert
-    supabase.from("visitor_sessions").insert([sessionData]).then(({ error }) => {
-      if (error) console.error("Telemetry Session Error:", error);
-    });
+      // Fun Telemetry: Dark Mode
+      const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      const sessionData = {
+        session_id: sessionIdRef.current,
+        visitor_id: vid,
+        user_agent: navigator.userAgent,
+        browser_info: { vendor: navigator.vendor, language: navigator.language },
+        os_info: { platform: navigator.platform },
+        screen_resolution: `${window.screen.width}x${window.screen.height}`,
+        window_resolution: `${window.innerWidth}x${window.innerHeight}`,
+        time_zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        locale: navigator.language,
+        device_memory: nav.deviceMemory || null,
+        hardware_concurrency: navigator.hardwareConcurrency || null,
+        network_type: nav.connection ? nav.connection.effectiveType : null,
+        referrer: document.referrer || "direct",
+        current_url: window.location.href,
+        
+        // The Fun Stuff!
+        battery_level: batteryLevel,
+        is_charging: isCharging,
+        dark_mode_active: isDarkMode
+      };
+
+      supabase.from("visitor_sessions").insert([sessionData]).then();
+    };
+    
+    initializeSession();
 
     // Setup global listeners like visibility and beforeunload to catch "tab switches"
     const handleVisibility = () => {
       if (document.hidden) {
-        supabase.from("visitor_events").insert([{
-          session_id: sessionIdRef.current,
-          event_type: "tab_blur",
-          metadata: { path: window.location.pathname }
-        }]);
+        supabase.from("visitor_events").insert([{ session_id: sessionIdRef.current, event_type: "tab_blur", metadata: { path: window.location.pathname } }]);
       } else {
-        supabase.from("visitor_events").insert([{
-          session_id: sessionIdRef.current,
-          event_type: "tab_focus",
-          metadata: { path: window.location.pathname }
-        }]);
+        supabase.from("visitor_events").insert([{ session_id: sessionIdRef.current, event_type: "tab_focus", metadata: { path: window.location.pathname } }]);
       }
     };
     
+    // Fun Telemetry: Catch "Rage Clicks" (Multiple fast clicks on the screen)
+    const handleGlobalClick = () => {
+      clickCountRef.current += 1;
+      if (!clickTimerRef.current) {
+        clickTimerRef.current = setTimeout(() => {
+          if (clickCountRef.current > 4) {
+            // User is rage clicking!
+            totalRageClicksRef.current += 1;
+            supabase.from("visitor_events").insert([{ session_id: sessionIdRef.current, event_type: "rage_click_detected" }]).then();
+          }
+          clickCountRef.current = 0;
+          clickTimerRef.current = null;
+        }, 1000); // 4 clicks within 1.0 second = rage click
+      }
+    };
+
     document.addEventListener("visibilitychange", handleVisibility);
+    document.addEventListener("click", handleGlobalClick);
+    
     return () => {
       document.removeEventListener("visibilitychange", handleVisibility);
-      endCurrentPage(); // Trigger close out on unmount
+      document.removeEventListener("click", handleGlobalClick);
+      endCurrentPage(); 
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Helpers to close out the previous page view
   const endCurrentPage = async () => {
     if (!currentViewIdRef.current) return;
-    await supabase.from("visitor_page_views")
-      .update({
+    await supabase.from("visitor_page_views").update({
         ended_at: new Date().toISOString(),
         duration_seconds: Math.floor((Date.now() - new Date(currentViewIdRef.current.split('|')[1]).getTime()) / 1000),
-        max_scroll_depth_percent: maxScrollRef.current
-      })
-      .eq("id", currentViewIdRef.current.split('|')[0]);
+        max_scroll_depth_percent: maxScrollRef.current,
+        rage_clicks: totalRageClicksRef.current
+      }).eq("id", currentViewIdRef.current.split('|')[0]);
   };
 
-  // 2. Track Route Changes Automatically
   useEffect(() => {
     if (!visitorId || !pathname) return;
-
     const recordNewPage = async () => {
-      // First, end the old one if it existed
-      if (currentViewIdRef.current) {
-        await endCurrentPage();
-      }
-
-      // Reset scroll for the new page
+      if (currentViewIdRef.current) await endCurrentPage();
       maxScrollRef.current = 0;
+      totalRageClicksRef.current = 0; // reset rage stats per page
+      
       const viewId = uuidv4();
-      const startTimeRef = new Date().toISOString();
-      currentViewIdRef.current = `${viewId}|${startTimeRef}`;
-
-      await supabase.from("visitor_page_views").insert([{
-        id: viewId,
-        session_id: sessionIdRef.current,
-        visitor_id: visitorId,
-        path: pathname,
-      }]);
+      currentViewIdRef.current = `${viewId}|${new Date().toISOString()}`;
+      await supabase.from("visitor_page_views").insert([{ id: viewId, session_id: sessionIdRef.current, visitor_id: visitorId, path: pathname }]);
     };
-
     recordNewPage();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, visitorId]);
 
-  // 3. Track Scroll Depth Intermittently
   useEffect(() => {
     const handleScroll = () => {
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       if (scrollHeight > 0) {
         const scrolled = (window.scrollY / scrollHeight) * 100;
-        if (scrolled > maxScrollRef.current) {
-          maxScrollRef.current = Math.min(100, Math.round(scrolled));
-        }
+        if (scrolled > maxScrollRef.current) maxScrollRef.current = Math.min(100, Math.round(scrolled));
       }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Main interaction logging hook
   const trackEvent = (eventType: string, metadata: Record<string, any> = {}) => {
     if (!visitorId) return;
-    supabase.from("visitor_events").insert([{
-      session_id: sessionIdRef.current,
-      event_type: eventType,
-      element_target: metadata.target || null,
-      metadata: metadata,
-    }]).then();
+    supabase.from("visitor_events").insert([{ session_id: sessionIdRef.current, event_type: eventType, element_target: metadata.target || null, metadata }]).then();
   };
 
-  return (
-    <TelemetryContext.Provider value={{ trackEvent, visitorId }}>
-      {children}
-    </TelemetryContext.Provider>
-  );
+  return <TelemetryContext.Provider value={{ trackEvent, visitorId }}>{children}</TelemetryContext.Provider>;
 }
 
 export const useTelemetry = () => useContext(TelemetryContext);
