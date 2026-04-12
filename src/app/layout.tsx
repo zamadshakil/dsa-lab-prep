@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Sidebar } from "@/components/sidebar";
 import { Analytics } from "@vercel/analytics/next";
 import { TelemetryProvider } from "@/components/telemetry";
-import { CameraConsentWrapper } from "@/components/camera-wrapper";
+import { LayoutShell } from "@/components/layout-shell";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -36,17 +35,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}>
       <body className="min-h-screen text-slate-900 font-[family-name:var(--font-inter)]">
         <TelemetryProvider>
-          <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[999] focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-[12px] focus:text-sm focus:font-medium shadow-md">
-            Skip to content
-          </a>
-          <Sidebar />
-          <main id="main-content" role="main" className="lg:pl-[280px]">
-            <div className="max-w-[1024px] mx-auto pt-[80px] lg:pt-[56px] px-6 sm:px-8 lg:px-10 pb-[100px] lg:pb-32">
-              {children}
-            </div>
-          </main>
+          <LayoutShell>{children}</LayoutShell>
           <Analytics />
-          <CameraConsentWrapper />
         </TelemetryProvider>
       </body>
     </html>
