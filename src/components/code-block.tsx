@@ -38,7 +38,7 @@ export function CodeBlock({ tabs, code, title }: CodeBlockProps) {
           
           {/* Tabs or Title */}
           {tabs && tabs.length > 1 ? (
-            <div className="flex items-center gap-1 overflow-x-auto hide-scrollbar flex-1 min-w-0" role="tablist">
+            <div className="flex items-center gap-1.5 overflow-x-auto code-scrollbar flex-1 min-w-0 pb-1.5 pt-0.5" role="tablist">
               {tabs.map((tab, i) => (
                 <button key={i} role="tab" aria-selected={i === activeTab} onClick={() => setActiveTab(i)}
                   className={cn(
