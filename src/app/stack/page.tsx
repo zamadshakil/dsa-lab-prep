@@ -2,36 +2,27 @@
 
 import { codeExamples } from "@/data/code-examples";
 import { CodeBlock } from "@/components/code-block";
-import {
-  SectionHeader, FadeIn, StaggerContainer, StaggerItem,
-  Card, KeyPoint, StackVisual, ComparisonTable,
-} from "@/components/ui-components";
+import { SectionHeader, FadeIn, StaggerContainer, StaggerItem, Card, KeyPoint, StackVisual, ComparisonTable } from "@/components/ui-components";
 
 export default function StackPage() {
   return (
-    <div className="space-y-6">
-      <SectionHeader icon="📚" title="Stack" tag="Topic 4" color="#ffd60a" colorDim="rgba(255,214,10,0.12)" />
+    <div className="space-y-5">
+      <SectionHeader icon="📚" title="Stack" tag="Topic 4" color="#f59f00" colorDim="rgba(245,159,0,0.1)" />
 
       <FadeIn delay={0.1}>
         <Card>
-          <h2 className="text-[17px] font-semibold text-[#f5f5f7] mb-3 tracking-[-0.01em]">LIFO — Last In, First Out</h2>
-          <div className="text-[14px] text-[#a1a1a6] leading-[1.7] space-y-3">
-            <p>A stack is like a pile of plates. You can only add/remove from the <strong className="text-[#f5f5f7]">top</strong>.</p>
-            <p>
-              <strong className="text-[#f5f5f7]">4 Operations:</strong><br />
-              • <code>push(value)</code> — add element to top<br />
-              • <code>pop()</code> — remove and return top element<br />
-              • <code>peek()</code> — view top without removing<br />
-              • <code>display()</code> — print all (top to bottom)
-            </p>
+          <h2 className="text-[17px] font-semibold text-[#1a1a2e] mb-3">LIFO — Last In, First Out</h2>
+          <div className="text-[14px] text-[#495057] leading-[1.7] space-y-3">
+            <p>A stack is like a pile of plates. You can only add/remove from the <strong>top</strong>.</p>
+            <p><strong>4 Operations:</strong><br />• <code>push(value)</code> — add to top<br />• <code>pop()</code> — remove top<br />• <code>peek()</code> — view top without removing<br />• <code>display()</code> — print all (top to bottom)</p>
           </div>
         </Card>
       </FadeIn>
 
       <FadeIn delay={0.15}>
         <Card className="flex flex-wrap justify-center gap-16 py-10">
-          <StackVisual items={[30, 20, 10]} label="Push order: 10, 20, 30" color="#ffd60a" />
-          <StackVisual items={[20, 10]} label="After pop() → returns 30" color="#ffd60a" />
+          <StackVisual items={[30, 20, 10]} label="Push order: 10, 20, 30" color="#f59f00" />
+          <StackVisual items={[20, 10]} label="After pop() → returns 30" color="#f59f00" />
         </Card>
       </FadeIn>
 
@@ -45,7 +36,7 @@ export default function StackPage() {
       </FadeIn>
 
       <FadeIn delay={0.25}>
-        <ComparisonTable title="Array Stack vs Linked List Stack" color="#ffd60a"
+        <ComparisonTable title="Array Stack vs Linked List Stack" color="#f59f00"
           headers={["Aspect", "Array", "Linked List"]}
           rows={[
             { aspect: "Size", col1: "Fixed (needs maxSize)", col2: "Dynamic (grows as needed)" },
@@ -60,7 +51,7 @@ export default function StackPage() {
       </FadeIn>
 
       <FadeIn delay={0.3}>
-        <CodeBlock title="stack" accentColor="#ffd60a"
+        <CodeBlock title="stack" accentColor="#f59f00"
           tabs={[
             { label: "Array", code: codeExamples.stack_array },
             { label: "Linked List", code: codeExamples.stack_linked_list },
