@@ -26,7 +26,7 @@ export function Sidebar() {
   ];
 
   const Nav = () => (
-    <div className="flex flex-col h-full bg-white/70 backdrop-blur-2xl">
+    <div className="flex flex-col h-full">
       {/* Brand */}
       <div className="px-6 pt-7 pb-5">
         <Link href="/" className="block group" aria-label="Home">
@@ -84,7 +84,7 @@ export function Sidebar() {
       </button>
 
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex fixed left-0 top-0 w-[280px] h-screen border-r border-slate-200 z-50 flex-col" aria-label="Navigation">
+      <aside className="hidden lg:flex fixed left-0 top-0 w-[280px] h-screen bg-white/70 backdrop-blur-2xl border-r border-slate-200 z-50 flex-col" aria-label="Navigation">
         <Nav />
       </aside>
 
@@ -96,7 +96,7 @@ export function Sidebar() {
               className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-[150] lg:hidden" aria-hidden="true" />
             <motion.aside initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }}
               transition={{ type: "spring", stiffness: 400, damping: 35 }}
-              className="fixed left-0 top-0 w-[280px] h-screen border-r border-slate-200 z-[160] flex flex-col lg:hidden shadow-2xl" aria-label="Mobile navigation">
+              className="fixed left-0 top-0 w-[280px] h-screen bg-white/95 backdrop-blur-2xl border-r border-slate-200 z-[160] flex flex-col lg:hidden shadow-2xl" aria-label="Mobile navigation">
               <Nav />
             </motion.aside>
           </>

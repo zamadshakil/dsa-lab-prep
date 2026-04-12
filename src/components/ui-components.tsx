@@ -163,19 +163,21 @@ export function NodeChain({ nodes, color, isCircular = false, headLabel = "head"
 
 // ===== STACK VISUAL =====
 export function StackVisual({ items, label, color = "#ff9500" }: { items: number[]; label: string; color?: string }) {
+  // To bottom-align when items are side by side, we can just render the items but pad out the height, or flex-1.
+  // The simplest fix to make side-by-side stacks align is ensuring the container flexes from the bottom or we use justify-end inside a fixed-height container.
   return (
     <div className="flex flex-col items-center">
       <p className="text-[11px] font-semibold text-slate-400 mb-4 uppercase tracking-[0.06em]">{label}</p>
-      <div className="flex flex-col items-center gap-[5px]">
+      <div className="flex flex-col items-center justify-end h-[160px] gap-[5px]">
         {items.map((val, i) => (
           <motion.div key={i} initial={{ scale: 0 }} animate={{ scale: 1 }}
             transition={{ delay: i * 0.1, type: "spring", stiffness: 400 }}
-            className="w-24 h-10 rounded-lg border-2 flex items-center justify-center font-semibold text-[14px] relative border-slate-200 text-slate-700 bg-white shadow-sm">
+            className="w-24 h-10 rounded-lg border-2 flex items-center justify-center font-semibold text-[14px] relative border-slate-200 text-slate-700 bg-white shadow-sm flex-shrink-0">
             {val}
             {i === 0 && <span className="absolute -right-14 text-[11px] font-bold text-blue-500">← top</span>}
           </motion.div>
         ))}
-        <div className="w-28 h-[3px] rounded-full mt-1 bg-slate-300" />
+        <div className="w-28 h-[3px] rounded-full mt-1 bg-slate-300 flex-shrink-0" />
       </div>
     </div>
   );
@@ -219,6 +221,4 @@ export function Badge({ children, variant = "warning" }: { children: React.React
     success: "bg-green-50 border border-green-200 text-green-700",
   };
   return <div role="alert" className={cn("inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-medium shadow-sm", s[variant])}>{children}</div>;
-}
-ldren}</div>;
 }
