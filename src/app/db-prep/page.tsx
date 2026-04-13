@@ -87,7 +87,7 @@ export default function DBPrepPage() {
             <div className="w-full bg-slate-100 h-1.5 rounded-full mb-8 overflow-hidden">
                <motion.div 
                  initial={{ width: 0 }}
-                 animate={{ width: \`${((currentQIndex + 1) / interactiveQuizData.length) * 100}%\` }}
+                 animate={{ width: `${((currentQIndex + 1) / interactiveQuizData.length) * 100}%` }}
                  className="h-full bg-emerald-500 rounded-full"
                />
             </div>
@@ -136,7 +136,7 @@ export default function DBPrepPage() {
                         key={idx}
                         disabled={selectedAnswer !== null}
                         onClick={() => handleAnswerSelect(idx)}
-                        className={\`w-full text-left p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-between font-medium \${bgClass}\`}
+                        className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-300 flex items-center justify-between font-medium ${bgClass}`}
                       >
                         {option}
                         {icon}
@@ -152,7 +152,7 @@ export default function DBPrepPage() {
                       initial={{ opacity: 0, height: 0, mt: 0 }}
                       animate={{ opacity: 1, height: 'auto', mt: 24 }}
                     >
-                      <div className={\`p-4 rounded-xl \${selectedAnswer === qData.correctAnswer ? 'bg-emerald-50 border border-emerald-100 text-emerald-800' : 'bg-orange-50 border border-orange-100 text-orange-800'}\`}>
+                      <div className={`p-4 rounded-xl ${selectedAnswer === qData.correctAnswer ? 'bg-emerald-50 border border-emerald-100 text-emerald-800' : 'bg-orange-50 border border-orange-100 text-orange-800'}`}>
                         <p className="text-sm font-semibold mb-1">Explanation:</p>
                         <p className="text-sm opacity-90">{qData.explanation}</p>
                       </div>
