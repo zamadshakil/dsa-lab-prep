@@ -12,18 +12,18 @@ export default function HomePage() {
       <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="pt-4 sm:pt-10 pb-10 sm:pb-14">
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
           className="inline-flex items-center gap-2 px-4 py-2 bg-white text-blue-600 text-[12px] font-semibold rounded-full mb-5 shadow-sm border border-slate-200">
-          📝 Mid-Term Lab Exam
+          📝 Quiz 2
         </motion.div>
 
         <motion.h1 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
           className="text-[36px] sm:text-[48px] font-bold tracking-[-0.04em] leading-[1.08] text-slate-900 mb-4">
-          DSA Lab Prep.
+          DSA Quiz 2 Prep.
         </motion.h1>
 
         <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
           className="text-[16px] sm:text-[18px] text-slate-600 leading-[1.6] max-w-lg">
           Every data structure, every algorithm, every code example — using{" "}
-          <strong className="text-slate-900">class</strong>, not struct. Ready for tomorrow.
+          <strong className="text-slate-900">class</strong>, not struct. Ready for the Quiz.
         </motion.p>
       </motion.section>
 
