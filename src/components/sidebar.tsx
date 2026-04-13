@@ -20,6 +20,7 @@ export function Sidebar() {
     { href: "/", label: "Overview", icon: "🏠" },
     ...topics.map((t) => ({ href: `/${t.slug}`, label: t.shortTitle, icon: t.icon })),
     { href: "/quick-reference", label: "Quick Ref", icon: "⚡" },
+    { href: "/db-prep", label: "DB Quiz", icon: "🗄️" },
   ];
 
   const Nav = () => (
