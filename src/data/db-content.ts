@@ -208,3 +208,30 @@ SELECT * FROM students AS stud;`,
     ]
   }
 ];
+
+export const interactiveQuizData = [
+  {
+    question: "Which SQL command empties a table completely but preserves its structure, doing so significantly faster than a DELETE operation?",
+    options: ["DROP TABLE", "DELETE FROM", "TRUNCATE TABLE", "CLEAR TABLE"],
+    correctAnswer: 2,
+    explanation: "TRUNCATE is a DDL command that quickly deallocates the data pages and resets identity columns, unlike DELETE which removes rows one by one."
+  },
+  {
+    question: "In Relational Algebra, what does the symbol 'π' (pi) represent?",
+    options: ["Row Selection (WHERE)", "Column Projection (SELECT)", "Cross Join (CARTESIAN)", "Renaming (AS)"],
+    correctAnswer: 1,
+    explanation: "π (pi) extracts specific columns from a relation, exactly like specifying column names in an SQL SELECT clause."
+  },
+  {
+    question: "Which of these is the ONLY correct way to extract students who have not provided an email address?",
+    options: ["WHERE email = NULL", "WHERE email IS NULL", "WHERE email == NULL", "WHERE email IN (NULL)"],
+    correctAnswer: 1,
+    explanation: "NULL is not a value; it's a state of 'unknown'. You cannot use mathematical operators (like =) on an unknown state. You must use IS NULL."
+  },
+  {
+    question: "Which attribute correctly links a child table to a parent table and can automatically delete child rows if the parent is removed?",
+    options: ["PRIMARY KEY", "CHECK CONSTRAINT", "UNIQUE", "FOREIGN KEY ... ON DELETE CASCADE"],
+    correctAnswer: 3,
+    explanation: "FOREIGN KEY establishes the link, and 'ON DELETE CASCADE' is the specific instruction that tells the database to clean up orphaned rows."
+  }
+];

@@ -29,9 +29,9 @@ export function Sidebar() {
       <div className="px-6 pt-7 pb-5">
         <Link href="/" className="block group" aria-label="Home">
           <p className="text-[17px] font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
-            DSA Lab Prep
+            DSA & DB Prep
           </p>
-          <p className="text-[12px] text-slate-500 font-medium mt-0.5">Mid-Term Exam · 2026</p>
+          <p className="text-[12px] text-slate-500 font-medium mt-0.5">Quiz 2 · 2026</p>
         </Link>
       </div>
 
@@ -86,7 +86,7 @@ export function Sidebar() {
       <div className="lg:hidden fixed top-0 left-0 right-0 h-[64px] bg-white/80 backdrop-blur-xl border-b border-slate-200/60 z-[140] flex items-center justify-between px-4 sm:px-6 shadow-sm">
         <Link href="/" className="flex flex-col">
           <p className="text-[16px] sm:text-[17px] font-bold tracking-tight text-slate-900">
-            DSA Lab
+            DSA & DB
           </p>
         </Link>
         <ExamCountdown />

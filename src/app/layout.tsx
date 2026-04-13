@@ -24,10 +24,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: { default: "DSA Lab Prep", template: "%s — DSA Lab Prep" },
-  description: "Interactive DSA Lab Exam preparation — Recursion, Linked Lists, Stack, Queue with code examples and diagrams.",
+  title: { default: "DSA & DB Quiz Prep", template: "%s — DSA & DB Quiz Prep" },
+  description: "Interactive University Quiz formulation for Data Structures & Database Systems.",
   metadataBase: new URL("https://dsa-lab-prep.vercel.app"),
-  openGraph: { title: "DSA Lab Prep", description: "Interactive DSA Lab Exam preparation dashboard", type: "website" },
+  openGraph: { title: "DSA & DB Quiz Prep", description: "Interactive preparation dashboard", type: "website" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
