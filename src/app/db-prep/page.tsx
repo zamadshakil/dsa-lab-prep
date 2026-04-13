@@ -87,7 +87,7 @@ export default function DBPrepPage() {
             <div className="w-full bg-slate-100 h-1.5 rounded-full mb-8 overflow-hidden">
                <motion.div 
                  initial={{ width: 0 }}
-                 animate={{ width: \`\${((currentQIndex + 1) / interactiveQuizData.length) * 100}%\` }}
+                 animate={{ width: \`${((currentQIndex + 1) / interactiveQuizData.length) * 100}%\` }}
                  className="h-full bg-emerald-500 rounded-full"
                />
             </div>
