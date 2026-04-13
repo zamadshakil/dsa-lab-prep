@@ -29,7 +29,7 @@ export default function CircularQueuePage() {
         <StaggerContainer className="grid sm:grid-cols-2 gap-3">
           <StaggerItem><KeyPoint icon="🧠"><strong>Modulo is the magic:</strong> <code>(rear + 1) % size</code> wraps 4 back to 0 when size is 5.</KeyPoint></StaggerItem>
           <StaggerItem><KeyPoint icon="⚠️"><strong>isFull Condition:</strong> <code>(rear + 1) % size == front</code> means the rear is right behind the front.</KeyPoint></StaggerItem>
-          <StaggerItem><KeyPoint icon="📝"><strong>Enqueue:</strong> <code>rear = (rear + 1) % size; arr[rear] = value;</code></KeyPoint></StaggerItem>
+          <StaggerItem><KeyPoint icon="📝"><strong>First Enqueue:</strong> If <code>front == -1</code>, it must be set to <code>0</code> when the first item is added!</KeyPoint></StaggerItem>
           <StaggerItem><KeyPoint icon="📝"><strong>Dequeue:</strong> If <code>front == rear</code> (only 1 element left), reset both to -1. Else, <code>front = (front + 1) % size;</code></KeyPoint></StaggerItem>
         </StaggerContainer>
       </FadeIn>

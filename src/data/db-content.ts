@@ -55,19 +55,26 @@ ALTER TABLE students CHANGE COLUMN email abc VARCHAR(20);
 ALTER TABLE students DROP COLUMN city;
 
 -- Add Constraint
-ALTER TABLE students ADD CONSTRAINT pk_students PRIMARY KEY (id);`,
+ALTER TABLE students ADD CONSTRAINT chk_age CHECK (age >= 18);`,
         language: "sql"
       }
     ]
   },
   {
-    title: "DROP & RENAME",
-    description: "Removing databases/tables entirely, or renaming tables.",
+    title: "DROP, TRUNCATE & RENAME",
+    description: "Removing tables entirely, clearing data, or renaming them.",
+    keyPoints: [
+      "DROP: Deletes the entire table structure and data (DDL).",
+      "TRUNCATE: Empties the table but keeps the structure intact. Very fast! (DDL).",
+      "DELETE: Removes rows one by one, can be rolled back (DML)."
+    ],
     codeBlocks: [
       {
-        title: "Drop & Rename",
+        title: "Remove Operations",
         code: `DROP DATABASE db_name;
 DROP TABLE students;
+
+TRUNCATE TABLE students; -- Clears all data, resets identity
 
 RENAME TABLE Orders TO Customer_Orders;`,
         language: "sql"
@@ -141,8 +148,9 @@ SELECT * FROM students WHERE id <> 10;`,
     title: "NULL Handling & BETWEEN & LIKE",
     description: "Special conditions and pattern matching.",
     keyPoints: [
-      "'%' represents ANY number of characters.",
-      "'_' represents EXACTLY ONE character."
+      "'%' represents ANY sequence of zero or more characters.",
+      "'_' represents EXACTLY ONE character.",
+      "IS NULL is the ONLY way to check for NULL (you cannot use = NULL)."
     ],
     codeBlocks: [
       {
@@ -180,9 +188,9 @@ export const relationalAlgebraContent = [
     title: "Relational Algebra to SQL",
     description: "The mathematical foundations that back SQL query operations mapping to Row filtering, Column projecting, and Renaming.",
     keyPoints: [
-      "Row Filtering / Selection (σ): Equivalent to WHERE clause.",
-      "Column Selection / Projection (π): Equivalent to SELECT attribute list.",
-      "Rename (ρ): Equivalent to AS keyword."
+      "Row Filtering / Selection (σ - sigma): Equivalent to WHERE clause.",
+      "Column Selection / Projection (π - pi): Equivalent to SELECT attribute list.",
+      "Rename (ρ - rho): Equivalent to AS keyword."
     ],
     codeBlocks: [
       {
