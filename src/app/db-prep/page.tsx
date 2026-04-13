@@ -149,8 +149,8 @@ export default function DBPrepPage() {
                 <AnimatePresence>
                   {selectedAnswer !== null && (
                     <motion.div 
-                      initial={{ opacity: 0, height: 0, mt: 0 }}
-                      animate={{ opacity: 1, height: 'auto', mt: 24 }}
+                      initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                      animate={{ opacity: 1, height: 'auto', marginTop: 24 }}
                     >
                       <div className={`p-4 rounded-xl ${selectedAnswer === qData.correctAnswer ? 'bg-emerald-50 border border-emerald-100 text-emerald-800' : 'bg-orange-50 border border-orange-100 text-orange-800'}`}>
                         <p className="text-sm font-semibold mb-1">Explanation:</p>
