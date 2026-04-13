@@ -2,14 +2,13 @@
 
 import { usePathname } from "next/navigation";
 import { Sidebar } from "@/components/sidebar";
-import { CameraConsentWrapper } from "@/components/camera-wrapper";
 
 export function LayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
 
   if (isAdmin) {
-    // Admin pages get a completely clean canvas — no sidebar, no padding, no camera consent
+    // Admin pages get a completely clean canvas — no sidebar, no padding
     return <>{children}</>;
   }
 
@@ -24,7 +23,6 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
           {children}
         </div>
       </main>
-      <CameraConsentWrapper />
     </>
   );
 }

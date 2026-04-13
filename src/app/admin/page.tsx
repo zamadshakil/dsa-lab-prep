@@ -5,7 +5,7 @@ import { supabase } from "@/lib/supabase";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Eye, Users, Clock, MousePointerClick, Monitor, Smartphone, Battery,
-  Moon, Sun, Globe, Copy, Camera, Activity, RefreshCw, Lock, ArrowLeft,
+  Moon, Sun, Globe, Copy, Activity, RefreshCw, Lock, ArrowLeft,
   Zap, TrendingUp, Map
 } from "lucide-react";
 import Link from "next/link";
@@ -31,8 +31,6 @@ interface Session {
   battery_level: number | null;
   is_charging: boolean | null;
   dark_mode_active: boolean | null;
-  snapshot_url: string | null;
-  camera_consent: boolean | null;
 }
 
 interface PageView {
@@ -200,7 +198,6 @@ export default function AdminPage() {
     : null;
   const copyEvents = events.filter((e) => e.event_type === "copy_code").length;
   const rageEvents = events.filter((e) => e.event_type === "rage_click_detected").length;
-  const snapshotCount = sessions.filter((s) => s.snapshot_url).length;
   const topPages = Object.entries(
     pageViews.reduce<Record<string, number>>((acc, pv) => { acc[pv.path] = (acc[pv.path] || 0) + 1; return acc; }, {})
   ).sort(([, a], [, b]) => b - a).slice(0, 8);
@@ -247,7 +244,6 @@ export default function AdminPage() {
           <StatCard icon={Eye} label="Page Views" value={pageViews.length} color="violet" />
           <StatCard icon={Copy} label="Code Copies" value={copyEvents} color="emerald" />
           <StatCard icon={MousePointerClick} label="Rage Clicks" value={rageEvents} sub="Frustration events" color="rose" />
-          <StatCard icon={Camera} label="Snapshots" value={snapshotCount} sub={`of ${sessions.length} sessions`} color="cyan" />
           <StatCard icon={Battery} label="Avg Battery" value={avgBattery !== null ? `${avgBattery}%` : "N/A"} color="amber" />
           <StatCard icon={Moon} label="Dark Mode" value={`${darkModeCount}`} sub={`${sessions.length > 0 ? Math.round((darkModeCount / sessions.length) * 100) : 0}% of users`} color="violet" />
           <StatCard icon={Smartphone} label="Mobile / Desktop" value={`${mobileCount} / ${desktopCount}`} color="blue" />
@@ -324,7 +320,6 @@ export default function AdminPage() {
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-slate-100 bg-slate-50/60">
-                  <th className="px-5 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Photo</th>
                   <th className="px-5 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Visitor</th>
                   <th className="px-5 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest">When</th>
                   <th className="px-5 py-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Device</th>
@@ -342,15 +337,6 @@ export default function AdminPage() {
                     onClick={() => setSelectedSession(s)}
                     className="border-b border-slate-50 last:border-0 hover:bg-blue-50/40 cursor-pointer transition-colors"
                   >
-                    <td className="px-5 py-3">
-                      {s.snapshot_url ? (
-                        <img src={s.snapshot_url} alt="" className="w-9 h-9 rounded-lg object-cover border border-slate-200 shadow-sm" />
-                      ) : (
-                        <div className="w-9 h-9 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center">
-                          <Camera size={12} className="text-slate-300" />
-                        </div>
-                      )}
-                    </td>
                     <td className="px-5 py-3">
                       <span className="text-[11px] font-mono text-slate-500">{s.visitor_id.slice(0, 8)}...</span>
                     </td>
@@ -457,11 +443,6 @@ export default function AdminPage() {
                 <button onClick={() => setSelectedSession(null)} className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400">✕</button>
               </div>
               <div className="p-6 space-y-5">
-                {selectedSession.snapshot_url && (
-                  <div className="flex justify-center">
-                    <img src={selectedSession.snapshot_url} alt="Visitor snapshot" className="w-40 h-40 rounded-2xl object-cover border-2 border-slate-200 shadow-lg" />
-                  </div>
-                )}
                 <div className="grid grid-cols-2 gap-3 text-[12px]">
                   {[
                     ["Visitor ID", selectedSession.visitor_id.slice(0, 16) + "..."],
@@ -477,7 +458,6 @@ export default function AdminPage() {
                     ["Network", selectedSession.network_type || "N/A"],
                     ["Battery", selectedSession.battery_level !== null ? `${selectedSession.battery_level}%${selectedSession.is_charging ? " ⚡" : ""}` : "N/A"],
                     ["Dark Mode", selectedSession.dark_mode_active === null ? "N/A" : selectedSession.dark_mode_active ? "Yes 🌙" : "No ☀️"],
-                    ["Camera", selectedSession.camera_consent ? "Allowed ✅" : "Denied"],
                     ["Referrer", selectedSession.referrer || "direct"],
                     ["First Seen", new Date(selectedSession.first_seen_at).toLocaleString()],
                   ].map(([label, value]) => (

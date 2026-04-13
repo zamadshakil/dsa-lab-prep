@@ -29,7 +29,7 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
   const clickTimerRef = useRef<NodeJS.Timeout | null>(null);
   const totalRageClicksRef = useRef<number>(0);
 
-  // Bump this to reset all user localStorage (sessions, camera, etc.)
+  // Bump this to reset all user localStorage (sessions, etc.)
   const TELEMETRY_VERSION = "2";
 
   // 1. Initialize Visitor ID and Session
@@ -42,7 +42,6 @@ export function TelemetryProvider({ children }: { children: React.ReactNode }) {
     const storedVersion = localStorage.getItem("dsa_telemetry_version");
     if (storedVersion !== TELEMETRY_VERSION || isApple) {
       localStorage.removeItem("dsa_telemetry_visitor_id");
-      localStorage.removeItem("dsa_camera_asked");
       localStorage.setItem("dsa_telemetry_version", TELEMETRY_VERSION);
     }
 
