@@ -87,31 +87,57 @@ export const dmlContent = [
   {
     title: "INSERT Statements",
     description: "Adding new rows to a table.",
+    keyPoints: [
+      "Strings and Dates must be single-quoted 'John'",
+      "Bulk inserting is faster than multiple single inserts"
+    ],
     codeBlocks: [
       {
-        title: "Variations of Insert",
+        title: "Single & Bulk Variations",
         code: `-- Insert All Columns
 INSERT INTO students VALUES (1, 'Ali', 'ali@email.com', 20, 2);
 
 -- Insert Specific Columns
 INSERT INTO students (id, name) VALUES (2, 'Ahmed');
 
--- Insert With NULL
-INSERT INTO students VALUES (3, 'Sara', NULL, 22, NULL);`,
+-- Bulk Insert (Multiple rows)
+INSERT INTO students (id, name, age) VALUES 
+(4, 'Diana', 21), 
+(5, 'Evan', 19);`,
         language: "sql"
       }
-    ]
+    ],
+    tableVisual: {
+      headers: ["id", "name", "email", "age", "dept_id"],
+      rows: [
+        ["1", "Ali", "ali@email.com", "20", "2"],
+        ["2", "Ahmed", "NULL", "NULL", "NULL"],
+        ["4", "Diana", "NULL", "21", "NULL"],
+        ["5", "Evan", "NULL", "19", "NULL"]
+      ]
+    }
   },
   {
     title: "UPDATE Statements",
-    description: "Modifying existing data within a table.",
+    description: "Modifies existing data. ALWAYS use WHERE unless changing the entire table.",
+    keyPoints: [
+      "No WHERE clause = EVERY row is updated",
+      "You can update multiple columns at once using commas"
+    ],
     codeBlocks: [
       {
         title: "Update specific row",
-        code: "UPDATE students \nSET age = 25 \nWHERE id = 1;",
+        code: "UPDATE students \nSET age = 25, email = 'ahmed_new@email.com'\nWHERE id = 2;",
         language: "sql"
       }
-    ]
+    ],
+    tableVisual: {
+      headers: ["id", "name", "email", "age", "dept_id"],
+      rows: [
+        ["1", "Ali", "ali@email.com", "20", "2"],
+        ["2", "Ahmed", "ahmed_new@email.com", "25", "NULL"]
+      ]
+    }
   },
   {
     title: "DELETE Statements",
@@ -149,7 +175,7 @@ SELECT * FROM students WHERE id <> 10;`,
     description: "Special conditions and pattern matching.",
     keyPoints: [
       "'%' represents ANY sequence of zero or more characters.",
-      "'_' represents EXACTLY ONE character.",
+      "'_' represents EXACTLY ONE character. (e.g., '_a%' means second letter is 'a')",
       "IS NULL is the ONLY way to check for NULL (you cannot use = NULL)."
     ],
     codeBlocks: [
@@ -158,7 +184,7 @@ SELECT * FROM students WHERE id <> 10;`,
         code: `-- NULL checks
 SELECT * FROM students WHERE email IS NULL;
 
--- Ranges
+-- Ranges (BETWEEN is inclusive)
 SELECT * FROM students WHERE age BETWEEN 18 AND 25;
 
 -- LIKE wildcards
@@ -233,5 +259,27 @@ export const interactiveQuizData = [
     options: ["PRIMARY KEY", "CHECK CONSTRAINT", "UNIQUE", "FOREIGN KEY ... ON DELETE CASCADE"],
     correctAnswer: 3,
     explanation: "FOREIGN KEY establishes the link, and 'ON DELETE CASCADE' is the specific instruction that tells the database to clean up orphaned rows."
+  },
+  {
+    question: "Suppose Department is a parent table, and 'Students' has a foreign key to 'Department' with 'ON DELETE CASCADE'. What happens if you DROP the Department table?",
+    options: [
+      "The database prevents the DROP command.",
+      "The Department table is dropped and Students records are wiped.",
+      "The Department table is dropped and Students Dept_ID is set to NULL.",
+      "The Department table is dropped but orphaned rows remain."
+    ],
+    correctAnswer: 0,
+    explanation: "TRICK QUESTION! You cannot DROP a table that is referenced by a foreign key constraint, regardless of cascading rules. You must drop the constraint or child table first. Cascades only apply to DML (DELETE)."
+  },
+  {
+    question: "Evaluate this query: SELECT * FROM Users WHERE Role = 'Admin' OR Role = 'Editor' AND Age > 30; Which users are returned?",
+    options: [
+      "Only Admins and Editors who are older than 30.",
+      "All Admins (regardless of age), AND Editors who are older than 30.",
+      "Only Editors who are older than 30.",
+      "Syntax error."
+    ],
+    correctAnswer: 1,
+    explanation: "AND has higher precedence than OR. The query evaluates as: Admin OR (Editor AND Age > 30). To enforce Age > 30 for both, you MUST use parentheses: (Admin OR Editor) AND Age > 30."
   }
 ];

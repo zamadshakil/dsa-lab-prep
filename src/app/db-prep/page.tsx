@@ -67,6 +67,37 @@ export default function DBPrepPage() {
                   </div>
                 ))}
               </div>
+
+              {block.tableVisual && (
+                <div className="mt-6 border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                  <div className="bg-slate-50 px-4 py-2 flex items-center gap-2 border-b border-slate-200">
+                    <span className="text-lg">📊</span>
+                    <h4 className="text-sm font-semibold text-slate-800">Database State Example</h4>
+                  </div>
+                  <div className="overflow-x-auto bg-white">
+                    <table className="w-full text-sm text-left">
+                      <thead className="text-[11px] text-slate-500 uppercase bg-slate-50/50 border-b border-slate-100">
+                        <tr>
+                          {block.tableVisual.headers.map((hdr: string, i: number) => (
+                            <th key={i} className="px-4 py-3 tracking-wide">{hdr}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {block.tableVisual.rows.map((row: string[], i: number) => (
+                          <tr key={i} className="border-b border-slate-50 last:border-0 hover:bg-slate-50/80 transition-colors">
+                            {row.map((cell: string, j: number) => (
+                              <td key={j} className={`px-4 py-3 font-medium ${cell === 'NULL' ? 'text-slate-400 italic' : 'text-slate-700'}`}>
+                                {cell}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
             </Card>
           </FadeIn>
         ))}

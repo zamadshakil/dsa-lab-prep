@@ -11,71 +11,87 @@ export default function HomePage() {
 
   return (
     <div className="min-h-[80vh] flex flex-col justify-center">
-      {/* Hero */}
-      <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="pt-4 sm:pt-10 pb-10">
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 text-white text-[12px] font-semibold rounded-full mb-5 shadow-sm">
-          🔥 Week 5 & 6 Final Phase
-        </motion.div>
-
-        <motion.h1 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="text-[36px] sm:text-[48px] font-bold tracking-[-0.04em] leading-[1.08] text-slate-900 mb-4">
-          Select Your Battle.
-        </motion.h1>
-
-        <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-          className="text-[16px] sm:text-[18px] text-slate-600 leading-[1.6] max-w-lg mb-8">
-          Choose the subject you want to prepare for. Both modules contain 100% accurate, high-yield material.
-        </motion.p>
-        
-        <div className="grid sm:grid-cols-2 gap-5 mb-10 pb-4">
-          {/* DSA Card */}
-          <motion.button 
-            onClick={() => setShowDsa(!showDsa)}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className={`text-left p-6 rounded-[24px] border-2 transition-all duration-300 shadow-md ${showDsa ? 'border-blue-500 bg-blue-50/50' : 'border-slate-100 bg-white hover:border-slate-200'}`}
-          >
-            <div className="w-14 h-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mb-5">
-              <Code2 size={28} />
-            </div>
-            <h2 className="text-2xl font-bold text-slate-900 mb-2">Data Structures</h2>
-            <p className="text-slate-500 text-sm leading-relaxed mb-4">Stack, Queue, Circular Queue, and Infix to Postfix implementations using <code>class</code>.</p>
-            <div className="flex items-center text-blue-600 font-semibold text-sm gap-2">
-              {showDsa ? "Close Topics" : "View Topics"} <ArrowRight size={16} />
-            </div>
-          </motion.button>
-
-          {/* DB Card */}
-          <Link href="/db-prep" className="block">
-            <motion.div 
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="p-6 rounded-[24px] bg-white border-2 border-slate-100 hover:border-slate-200 transition-all duration-300 shadow-md h-full"
-            >
-              <div className="w-14 h-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center mb-5">
-                <Database size={28} />
-              </div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-2">Database Systems</h2>
-              <p className="text-slate-500 text-sm leading-relaxed mb-4">DDL, DML, Relational Algebra, and complex SELECT queries with interactive checkpoints.</p>
-              <div className="flex items-center text-purple-600 font-semibold text-sm gap-2 mt-auto">
-                Enter Database Module <ArrowRight size={16} />
-              </div>
-            </motion.div>
-          </Link>
-        </div>
-      </motion.section>
-
-      {/* Topics Bento Grid (Shown if DSA is selected) */}
-      <AnimatePresence>
-        {showDsa && (
+      <AnimatePresence mode="wait">
+        {!showDsa ? (
           <motion.div 
-            initial={{ opacity: 0, height: 0 }} 
-            animate={{ opacity: 1, height: 'auto' }} 
-            exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden"
+            key="gateway"
+            initial={{ opacity: 0, x: -20 }} 
+            animate={{ opacity: 1, x: 0 }} 
+            exit={{ opacity: 0, x: -20, transition: { duration: 0.2 } }}
+            className="w-full"
           >
-            <div className="grid sm:grid-cols-2 gap-4 pb-14 border-t border-slate-200 pt-8">
+            <section className="pt-4 sm:pt-10 pb-10">
+              <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 text-white text-[12px] font-semibold rounded-full mb-5 shadow-sm">
+                🔥 Quiz 2
+              </motion.div>
+
+              <motion.h1 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+                className="text-[36px] sm:text-[48px] font-bold tracking-[-0.04em] leading-[1.08] text-slate-900 mb-4">
+                Select Your Battle.
+              </motion.h1>
+
+              <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
+                className="text-[16px] sm:text-[18px] text-slate-600 leading-[1.6] max-w-lg mb-8">
+                Choose the subject you want to prepare for. Both modules contain 100% accurate, high-yield material.
+              </motion.p>
+              
+              <div className="grid sm:grid-cols-2 gap-5 mb-10 pb-4">
+                {/* DSA Card */}
+                <motion.button 
+                  onClick={() => setShowDsa(true)}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="text-left p-6 rounded-[24px] border-2 transition-all duration-300 shadow-md border-slate-100 bg-white hover:border-slate-200"
+                >
+                  <div className="w-14 h-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mb-5">
+                    <Code2 size={28} />
+                  </div>
+                  <h2 className="text-2xl font-bold text-slate-900 mb-2">Data Structures</h2>
+                  <p className="text-slate-500 text-sm leading-relaxed mb-4">Stack, Queue, Circular Queue, and Infix to Postfix implementations using <code>class</code>.</p>
+                  <div className="flex items-center text-blue-600 font-semibold text-sm gap-2 mt-auto">
+                    View Topics <ArrowRight size={16} />
+                  </div>
+                </motion.button>
+
+                {/* DB Card */}
+                <Link href="/db-prep" className="block">
+                  <motion.div 
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="p-6 rounded-[24px] bg-white border-2 border-slate-100 hover:border-slate-200 transition-all duration-300 shadow-md h-full"
+                  >
+                    <div className="w-14 h-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center mb-5">
+                      <Database size={28} />
+                    </div>
+                    <h2 className="text-2xl font-bold text-slate-900 mb-2">Database Systems</h2>
+                    <p className="text-slate-500 text-sm leading-relaxed mb-4">DDL, DML, Relational Algebra, and complex SELECT queries with interactive checkpoints.</p>
+                    <div className="flex items-center text-purple-600 font-semibold text-sm gap-2 mt-auto">
+                      Enter Database Module <ArrowRight size={16} />
+                    </div>
+                  </motion.div>
+                </Link>
+              </div>
+            </section>
+          </motion.div>
+        ) : (
+          <motion.div 
+            key="dsa-topics"
+            initial={{ opacity: 0, x: 20 }} 
+            animate={{ opacity: 1, x: 0 }} 
+            exit={{ opacity: 0, x: 20 }}
+            className="w-full pt-4 sm:pt-10"
+          >
+            <button 
+              onClick={() => setShowDsa(false)}
+              className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-xl transition-colors font-medium text-sm mb-6 shadow-sm"
+            >
+              <ArrowRight size={16} className="rotate-180" /> Back to Subject Selection
+            </button>
+            
+            <h2 className="text-3xl font-bold text-slate-900 mb-6 tracking-tight">Data Structures</h2>
+
+            <div className="grid sm:grid-cols-2 gap-4 pb-14">
               {topics.map((topic) => (
                 <motion.div key={topic.slug} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
                   <Link href={`/${topic.slug}`}>
